@@ -2,7 +2,10 @@ import { motion } from 'framer-motion'
 
 const PropertyDetails = () => {
   return (
-    <section id="specifications" className="section-container bg-white">
+    <section
+      id="specifications"
+      className="mt-12 rounded-3xl border border-primary-200/30 bg-neutral-50/80 p-8 shadow-xl"
+    >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -41,7 +44,7 @@ const PropertyDetails = () => {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             whileHover={{ y: -10, scale: 1.02 }}
-            className="bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all"
+            className="bg-gradient-to-br from-primary-50 to-neutral-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all"
           >
             <h3 className="text-3xl font-bold text-primary-600 mb-4">{spec.type}</h3>
             <p className="text-lg text-neutral-700 mb-2">Area: {spec.area}</p>

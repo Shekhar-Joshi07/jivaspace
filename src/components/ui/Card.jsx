@@ -12,7 +12,7 @@ const Card = ({
   variants,
   ...props
 }) => {
-  const baseClasses = 'bg-white'
+  const baseClasses = 'bg-neutral-50'
 
   const paddingClass = padding ? 'p-6' : ''
   const shadowClass = shadow ? 'shadow-md' : ''

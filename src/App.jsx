@@ -1,16 +1,144 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import FloatingButtons from './components/cta/FloatingButtons'
 import Home from './pages/Home'
+import EnquiryModal from './components/forms/EnquiryModal'
+import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
+import preloaderLogo from './assets/JivaSpace LOGO.jpeg'
 
 function App() {
-  const [loading, setLoading] = useState(true)
+  const ONE_HOUR_MS = 60 * 60 * 1000
+  const MOBILE_LOADER_MS = 4000
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === 'undefined') return true
+    try {
+      const lastRefresh = Number(window.localStorage.getItem('jiva_last_refresh')) || 0
+      return Date.now() - lastRefresh >= ONE_HOUR_MS
+    } catch {
+      return true
+    }
+  })
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false)
+  const videoRef = useRef(null)
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1200)
+    try {
+      window.localStorage.setItem('jiva_last_refresh', String(Date.now()))
+    } catch {
+      // Ignore storage errors (private mode, blocked storage, etc.)
+    }
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const mediaQuery = window.matchMedia('(max-width: 640px)')
+    const handleChange = () => setIsMobile(mediaQuery.matches)
+    handleChange()
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
+    }
+
+    mediaQuery.addListener(handleChange)
+    return () => mediaQuery.removeListener(handleChange)
+  }, [])
+
+  useEffect(() => {
+    if (!loading) return
+
+    if (isMobile) {
+      const mobileTimer = setTimeout(() => {
+        setLoading(false)
+      }, MOBILE_LOADER_MS)
+      return () => clearTimeout(mobileTimer)
+    }
+
+    const video = videoRef.current
+    if (!video) return
+
+    // Start muted to allow autoplay
+    video.muted = true
+    const isSmallScreen = window.matchMedia('(max-width: 640px)').matches
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (isSmallScreen || prefersReducedMotion) {
+      // Lightly throttle playback on constrained devices to reduce frame drops
+      video.playbackRate = 0.9
+    }
+
+    // Try to play as soon as possible
+    const attemptPlay = () => {
+      const playPromise = video.play()
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Video playing successfully')
+            setVideoLoaded(true)
+          })
+          .catch(err => {
+            console.log('Video autoplay failed:', err)
+            setTimeout(() => setLoading(false), 1000)
+          })
+      } else {
+        setVideoLoaded(true)
+      }
+    }
+
+    const handleEnded = () => {
+      console.log('Video ended')
+      setTimeout(() => setLoading(false), 300)
+    }
+
+    const handleError = (e) => {
+      console.log('Video error:', e)
+      setTimeout(() => setLoading(false), 1000)
+    }
+
+    // Try multiple events to ensure playback starts
+    const handleLoadedMetadata = () => {
+      console.log('Video metadata loaded')
+      attemptPlay()
+    }
+
+    const handleLoadedData = () => {
+      console.log('Video data loaded')
+      // Only attempt if not already playing
+      if (video.paused) {
+        attemptPlay()
+      }
+    }
+
+    video.addEventListener('loadedmetadata', handleLoadedMetadata)
+    video.addEventListener('loadeddata', handleLoadedData)
+    video.addEventListener('ended', handleEnded)
+    video.addEventListener('error', handleError)
+
+    // Immediate attempt if video is already loaded
+    if (video.readyState >= 2) {
+      console.log('Video already loaded, playing immediately')
+      attemptPlay()
+    }
+
+    // Fallback timer
+    const fallbackTimer = setTimeout(() => {
+      console.log('Fallback timer - skipping to site')
+      setLoading(false)
+    }, 10000)
+
+    return () => {
+      clearTimeout(fallbackTimer)
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata)
+      video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('ended', handleEnded)
+      video.removeEventListener('error', handleError)
+    }
+  }, [loading, isMobile])
 
   return (
     <AnimatePresence mode="wait">
@@ -19,36 +147,40 @@ function App() {
           key="loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700"
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1225]"
         >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-20 h-20 border-4 border-white border-t-transparent rounded-full mx-auto mb-6"
+          {isMobile ? (
+            <motion.img
+              src={preloaderLogo}
+              alt="JivaSpace logo"
+              className="w-[72%] max-w-sm h-auto object-contain select-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 1, 0] }}
+              transition={{ duration: 4, times: [0, 0.2, 0.8, 1], ease: 'easeInOut' }}
+              draggable="false"
             />
-            <motion.h2
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-3xl font-display font-bold text-white"
-            >
-              JivaSpace
-            </motion.h2>
-            <motion.p
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-white/80 mt-2"
-            >
-              Loading your dream home...
-            </motion.p>
-          </motion.div>
+          ) : (
+            <video
+              ref={videoRef}
+              src={preloaderVideo}
+              className={`w-full h-full bg-[#0d1225] object-contain sm:object-cover object-center transition-opacity duration-300 ${
+                videoLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+            />
+          )}
+          {!videoLoaded && !isMobile && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-dark-700 font-medium">Loading...</p>
+              </div>
+            </div>
+          )}
         </motion.div>
       ) : (
         <motion.div
@@ -58,12 +190,13 @@ function App() {
           transition={{ duration: 0.5 }}
           className="min-h-screen"
         >
-          <Header />
+          <Header onEnquiryOpen={() => setIsEnquiryOpen(true)} />
           <main className="pt-20">
-            <Home />
+            <Home onEnquiryOpen={() => setIsEnquiryOpen(true)} />
           </main>
           <Footer />
-          <FloatingButtons />
+          <FloatingButtons onEnquiryOpen={() => setIsEnquiryOpen(true)} />
+          <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
         </motion.div>
       )}
     </AnimatePresence>

@@ -3,20 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { backdropVariants, mobileMenuVariants } from '@/lib/animations'
 import { scrollToElement } from '@/lib/utils'
 import { siteConfig } from '@/data/siteConfig'
+import { mainNavItems, propertyCategories } from '@/data/navigation'
 
-const MobileMenu = ({ isOpen, onClose }) => {
-  const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Amenities', href: '#amenities' },
-    { label: 'Floor Plans', href: '#floor-plans' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Location', href: '#location' },
-    { label: 'Contact', href: '#contact' },
-  ]
+const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
+  const primaryNav = mainNavItems.slice(0, 2)
+  const secondaryNav = mainNavItems.slice(2)
 
   const handleClick = (e, href) => {
     e.preventDefault()
+    if (href === '#contact' && onEnquiryOpen) {
+      onClose()
+      onEnquiryOpen()
+      return
+    }
     const elementId = href.replace('#', '')
     scrollToElement(elementId)
     onClose()
@@ -38,7 +37,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
 
           {/* Menu Panel */}
           <motion.div
-            className="fixed top-0 right-0 bottom-0 w-80 bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-80 bg-neutral-50 shadow-2xl z-50 lg:hidden overflow-y-auto"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
@@ -78,12 +77,78 @@ const MobileMenu = ({ isOpen, onClose }) => {
             {/* Navigation Links */}
             <nav className="p-6">
               <ul className="space-y-4">
-                {navItems.map((item, index) => (
+                {primaryNav.map((item, index) => (
                   <motion.li
                     key={item.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
+                  >
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleClick(e, item.href)}
+                      className="block px-4 py-3 text-lg font-medium text-neutral-700 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"
+                    >
+                      {item.label}
+                    </a>
+                  </motion.li>
+                ))}
+
+                <motion.li
+                  key="properties"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: primaryNav.length * 0.05 }}
+                  className="rounded-lg border border-neutral-200 bg-white/70"
+                >
+                  <details className="group">
+                    <summary className="list-none cursor-pointer px-4 py-3 text-lg font-medium text-neutral-800 flex items-center justify-between">
+                      <span>Properties+</span>
+                      <span className="text-neutral-500 group-open:rotate-90 transition-transform">&gt;</span>
+                    </summary>
+                    <div className="px-4 pb-4">
+                      <div className="space-y-4">
+                        {propertyCategories.map((category) =>
+                          category.items.length ? (
+                            <details key={category.label} className="group">
+                              <summary className="list-none cursor-pointer text-sm font-semibold uppercase tracking-wide text-neutral-600 flex items-center justify-between py-2">
+                                <span>{category.label}</span>
+                                <span className="text-neutral-400 group-open:rotate-90 transition-transform">&gt;</span>
+                              </summary>
+                              <ul className="pl-3 space-y-2">
+                                {category.items.map((item) => (
+                                  <li key={item.label}>
+                                    <a
+                                      href={item.href}
+                                      onClick={(e) => handleClick(e, item.href)}
+                                      className="block text-sm font-medium text-neutral-700 hover:text-primary-500 transition-colors"
+                                    >
+                                      {item.label}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
+                          ) : (
+                            <div
+                              key={category.label}
+                              className="text-sm font-semibold uppercase tracking-wide text-neutral-600 py-2"
+                            >
+                              {category.label}
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </details>
+                </motion.li>
+
+                {secondaryNav.map((item, index) => (
+                  <motion.li
+                    key={item.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: (index + primaryNav.length + 1) * 0.05 }}
                   >
                     <a
                       href={item.href}

@@ -8,52 +8,71 @@
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900 antialiased;
+    @apply bg-dark-50 text-dark-900 antialiased;
+    background: linear-gradient(135deg, #0b1226 0%, #0f1a34 50%, #131f3d 100%);
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-display text-dark-900;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-medium
-           hover:bg-primary-600 transition-all duration-300
-           shadow-md hover:shadow-lg active:scale-95
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white px-8 py-3 rounded-xl font-semibold
+           hover:from-primary-500 hover:to-primary-600 transition-all duration-300
+           shadow-lg shadow-primary-500/50 hover:shadow-xl hover:shadow-primary-500/70 active:scale-95
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
 
   .btn-secondary {
-    @apply bg-white text-primary-500 border-2 border-primary-500 px-6 py-3 rounded-lg font-medium
-           hover:bg-primary-50 transition-all duration-300
+    @apply bg-dark-100 text-dark-900 border border-dark-200 px-8 py-3 rounded-xl font-semibold
+           hover:bg-dark-200 hover:border-dark-300 transition-all duration-300
            shadow-md hover:shadow-lg active:scale-95
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+           focus:outline-none focus:ring-2 focus:ring-dark-300 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-white border-2 border-white px-6 py-3 rounded-lg font-medium
-           hover:bg-white hover:text-primary-500 transition-all duration-300
+    @apply bg-dark-100/50 backdrop-blur-sm text-dark-900 border border-dark-200/50 px-8 py-3 rounded-xl font-semibold
+           hover:bg-dark-100 hover:border-dark-200 transition-all duration-300
            active:scale-95
-           focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2;
+           focus:outline-none focus:ring-2 focus:ring-dark-300 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
 
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-spacing {
+    @apply py-12;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-soft;
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-neutral-300
-           focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20
+    @apply w-full px-4 py-3 rounded-xl border border-primary-200/40 bg-transparent
+           text-dark-900 placeholder-dark-600
+           focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20
            transition-all duration-200 outline-none;
   }
 
   .input-error {
-    @apply border-red-500 focus:border-red-500 focus:ring-red-500;
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500/20;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #c9a24a 0%, #8e6b22 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #e4cf9a 0%, #c9a24a 50%, #8e6b22 100%);
+  }
+
+  .glass-effect {
+    @apply bg-dark-100/30 backdrop-blur-xl border border-dark-200/50;
   }
 }
 
