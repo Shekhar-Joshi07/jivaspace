@@ -10,6 +10,10 @@ import Properties from './pages/Properties'
 import Amenities from './pages/Amenities'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
+import MigsunCentral from './pages/MigsunCentral'
+import MigsunJanpath from './pages/MigsunJanpath'
+import FelixImperial from './pages/FelixImperial'
+import TheGalleria from './pages/TheGalleria'
 import EnquiryModal from './components/forms/EnquiryModal'
 import { scrollToElement } from './lib/utils'
 import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
@@ -69,6 +73,13 @@ function App() {
 
     mediaQuery.addListener(handleChange)
     return () => mediaQuery.removeListener(handleChange)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const handleOpen = () => setIsEnquiryOpen(true)
+    window.addEventListener('open-enquiry', handleOpen)
+    return () => window.removeEventListener('open-enquiry', handleOpen)
   }, [])
 
   useEffect(() => {
@@ -223,6 +234,10 @@ function App() {
                 <Route path="/amenities" element={<Amenities />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/properties/migsun-central" element={<MigsunCentral />} />
+                <Route path="/properties/migsun-janpath" element={<MigsunJanpath />} />
+                <Route path="/properties/felix-imperial" element={<FelixImperial />} />
+                <Route path="/properties/the-galleria" element={<TheGalleria />} />
               </Routes>
             </main>
             <Footer />

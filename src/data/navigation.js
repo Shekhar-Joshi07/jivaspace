@@ -16,10 +16,10 @@ export const propertyCategories = [
   {
     label: 'Commercial',
     items: [
-      { label: 'Migsun Janpath', href: '/properties' },
-      { label: 'Migsun Central', href: '/properties' },
-      { label: 'Felix Imperial', href: '/properties' },
-      { label: 'The Galleria', href: '/properties' },
+      { label: 'Migsun Janpath', href: '/properties/migsun-janpath' },
+      { label: 'Migsun Central', href: '/properties/migsun-central' },
+      { label: 'Felix Imperial', href: '/properties/felix-imperial' },
+      { label: 'The Galleria', href: '/properties/the-galleria' },
     ],
   },
   {
