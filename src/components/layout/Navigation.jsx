@@ -12,6 +12,11 @@ const Navigation = ({ onEnquiryOpen }) => {
   const navigate = useNavigate()
   const defaultCategory =
     propertyCategories.find((category) => category.items?.length) ?? propertyCategories[0]
+  const activeIndex = Math.max(
+    0,
+    propertyCategories.findIndex((category) => category.label === activeCategory?.label),
+  )
+  const submenuOffset = activeIndex * 44
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -110,11 +115,11 @@ const Navigation = ({ onEnquiryOpen }) => {
             }`}
           >
             <div
-              className={`flex rounded-xl bg-[#ffffff] shadow-xl border border-neutral-200 overflow-hidden ${
-                activeCategory?.items?.length ? 'min-w-[340px]' : 'min-w-[240px]'
+              className={`flex items-stretch rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200 overflow-hidden ${
+                activeCategory?.items?.length ? 'w-[460px]' : 'w-[240px]'
               }`}
             >
-              <div className="w-56 p-4 bg-[#ffffff]">
+              <div className="w-56 p-5 bg-[#ffffff]">
                 <ul className="space-y-4">
                   {propertyCategories.map((category) => {
                     const isActive = activeCategory?.label === category.label
@@ -126,11 +131,11 @@ const Navigation = ({ onEnquiryOpen }) => {
                           onMouseEnter={() => setActiveCategory(category)}
                           onFocus={() => setActiveCategory(category)}
                           className={`w-full flex items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors ${
-                            isActive ? 'text-primary-600' : 'text-black hover:text-black'
+                            isActive ? 'text-primary-600' : 'text-neutral-900 hover:text-neutral-900'
                           }`}
                         >
                           <span>{category.label}</span>
-                          <span className={`${isActive ? 'text-primary-600' : 'text-neutral-400'}`}>&gt;</span>
+                          <span className={`${isActive ? 'text-primary-600' : 'text-neutral-500'}`}>&gt;</span>
                         </button>
                       </li>
                     )
@@ -141,14 +146,14 @@ const Navigation = ({ onEnquiryOpen }) => {
               {activeCategory?.items?.length ? (
                 <>
                   <div className="w-px bg-neutral-200" />
-                  <div className="w-52 p-5 bg-[#ffffff]">
-                    <ul className="space-y-4">
+                  <div className="w-56 p-5 bg-[#ffffff]">
+                    <ul className="space-y-4" style={{ paddingTop: submenuOffset }}>
                       {activeCategory.items.map((item) => (
                         <li key={item.label}>
                           <a
                             href={item.href}
                             onClick={(e) => handleNavClick(e, item.href)}
-                            className="block text-sm font-semibold text-black uppercase tracking-wide hover:text-primary-600 transition-colors"
+                            className="block text-sm font-semibold text-neutral-900 uppercase tracking-wide hover:text-primary-600 transition-colors"
                           >
                             {item.label}
                           </a>

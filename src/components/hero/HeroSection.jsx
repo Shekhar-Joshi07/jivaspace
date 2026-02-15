@@ -83,7 +83,7 @@ const HeroSection = ({ onEnquiryOpen }) => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto leading-relaxed"
           >
-            Experience world-class amenities and modern architecture at Rishita Mulberry Heights
+            Experience world-class amenities and modern architecture with JivaSpace. Your dream home awaits in the heart of Lucknow.
           </motion.p>
 
           <motion.div
