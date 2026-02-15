@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const ContactForm = ({
   showHeading = true,
@@ -13,16 +15,65 @@ const ContactForm = ({
     phone: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const sheetsUrl = (import.meta.env.VITE_GOOGLE_SHEETS_URL || '').trim()
 
   const isPlain = variant === 'plain'
   const fieldSpacing = compact ? 'space-y-4' : 'space-y-6'
   const formPadding = compact ? 'p-6' : 'p-8'
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    alert('Thank you! We will contact you soon.')
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    const toast = Swal.mixin({
+      width: 360,
+      backdrop: false,
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      customClass: { popup: 'swal-rounded' },
+    })
+
+    if (!sheetsUrl) {
+      toast.fire({
+        icon: 'warning',
+        title: 'Not configured',
+        text: 'Enquiry form is not configured. Please try again later.',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const payload = {
+        ...formData,
+        // source: typeof window !== 'undefined' ? window.location.pathname : '',
+        source: "Website - www.jivaspace.com",
+        submittedAt: new Date().toISOString(),
+      }
+
+      await fetch(sheetsUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload),
+      })
+
+      toast.fire({
+        icon: 'success',
+        title: 'Enquiry sent',
+        text: 'Thank you! We will contact you soon.',
+      })
+      setFormData({ name: '', email: '', phone: '', message: '' })
+    } catch (error) {
+      console.error('Form submission failed:', error)
+      toast.fire({
+        icon: 'error',
+        title: 'Submission failed',
+        text: 'Please try again later.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -134,9 +185,12 @@ const ContactForm = ({
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className={`btn-primary w-full ${compact ? 'text-base py-3' : 'text-lg py-4'}`}
+            className={`btn-primary w-full ${compact ? 'text-base py-3' : 'text-lg py-4'} ${
+              isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+            }`}
+            disabled={isSubmitting}
           >
-            Send Enquiry
+            {isSubmitting ? 'Sending...' : 'Send Enquiry'}
           </motion.button>
         </div>
       </motion.form>

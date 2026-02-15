@@ -1,20 +1,76 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const EnquiryModal = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '' })
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const sheetsUrl = (import.meta.env.VITE_GOOGLE_SHEETS_URL || '').trim()
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('Enquiry submitted:', formData)
-    alert('Thank you! We will contact you soon.')
-    setFormData({ name: '', phone: '', email: '' })
-    onClose()
+    const toast = Swal.mixin({
+      width: 360,
+      backdrop: false,
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      customClass: { popup: 'swal-rounded' },
+    })
+
+    if (!sheetsUrl) {
+      toast.fire({
+        icon: 'warning',
+        title: 'Not configured',
+        text: 'Enquiry form is not configured. Please try again later.',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const payload = {
+        ...formData,
+        // source: typeof window !== 'undefined' ? window.location.pathname : '',
+        source: "Website - www.jivaspace.com",
+        submittedAt: new Date().toISOString(),
+      }
+
+      await fetch(sheetsUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload),
+      })
+
+      toast.fire({
+        icon: 'success',
+        title: 'Enquiry sent',
+        text: 'Thank you! We will contact you soon.',
+      })
+      setFormData({ name: '', phone: '', email: '', message: '' })
+      onClose()
+    } catch (error) {
+      console.error('Enquiry submission failed:', error)
+      toast.fire({
+        icon: 'error',
+        title: 'Submission failed',
+        text: 'Please try again later.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   useEffect(() => {
@@ -68,8 +124,11 @@ const EnquiryModal = ({ isOpen, onClose }) => {
             <div className="pointer-events-none absolute inset-4 rounded-2xl border-2 border-dashed border-white/30" />
             <button
               type="button"
-              onClick={onClose}
-              className="absolute right-4 top-4 rounded-full bg-white/90 p-2 text-dark-900 hover:bg-white transition"
+              onClick={(event) => {
+                event.stopPropagation()
+                onClose()
+              }}
+              className="absolute right-4 top-4 z-10 rounded-full bg-white/90 p-2 text-dark-900 hover:bg-white transition"
               aria-label="Close"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,7 +163,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
                     onChange={handleChange}
                     placeholder="Name here"
                     required
-                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-dark-900 shadow-sm focus:outline-none"
+                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none"
                   />
                 </div>
 
@@ -121,7 +180,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
                     onChange={handleChange}
                     placeholder="Phone Number"
                     required
-                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-dark-900 shadow-sm focus:outline-none"
+                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none"
                   />
                 </div>
 
@@ -138,15 +197,41 @@ const EnquiryModal = ({ isOpen, onClose }) => {
                     onChange={handleChange}
                     placeholder="Email here"
                     required
-                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-dark-900 shadow-sm focus:outline-none"
+                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none"
+                  />
+                </div>
+
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-4 top-4 text-dark-500">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                      <path d="M7 7h10M7 11h10M7 15h6M5 3h14a2 2 0 012 2v12l-4-4H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+                    </svg>
+                  </span>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Message"
+                    rows={3}
+                    className="w-full rounded-md bg-white px-12 py-3 text-sm text-neutral-900 placeholder-neutral-500 shadow-sm focus:outline-none"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-black py-3 text-sm font-semibold uppercase tracking-widest text-white shadow-lg"
+                  className={`w-full rounded-full bg-black py-3 text-sm font-semibold uppercase tracking-widest text-white shadow-lg ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
+                  disabled={isSubmitting}
                 >
-                  Submit
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/70 border-t-transparent" />
+                      Sending...
+                    </span>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </form>
             </div>

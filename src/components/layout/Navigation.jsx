@@ -7,16 +7,13 @@ import { mainNavItems, propertyCategories } from '@/data/navigation'
 const Navigation = ({ onEnquiryOpen }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [submenuOffset, setSubmenuOffset] = useState(0)
   const dropdownRef = useRef(null)
+  const menuPanelRef = useRef(null)
   const location = useLocation()
   const navigate = useNavigate()
   const defaultCategory =
     propertyCategories.find((category) => category.items?.length) ?? propertyCategories[0]
-  const activeIndex = Math.max(
-    0,
-    propertyCategories.findIndex((category) => category.label === activeCategory?.label),
-  )
-  const submenuOffset = activeIndex * 44
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,11 +31,22 @@ const Navigation = ({ onEnquiryOpen }) => {
   const closeDropdown = () => {
     setIsDropdownOpen(false)
     setActiveCategory(null)
+    setSubmenuOffset(0)
   }
 
   const openDropdown = () => {
     setIsDropdownOpen(true)
     setActiveCategory((current) => current ?? defaultCategory ?? null)
+    setSubmenuOffset(0)
+  }
+
+  const handleCategoryHover = (category, event) => {
+    setActiveCategory(category)
+    if (!menuPanelRef.current || !event?.currentTarget) return
+    const panelRect = menuPanelRef.current.getBoundingClientRect()
+    const itemRect = event.currentTarget.getBoundingClientRect()
+    const offset = Math.max(0, itemRect.top - panelRect.top)
+    setSubmenuOffset(offset)
   }
 
   const handleNavClick = (e, href) => {
@@ -115,11 +123,10 @@ const Navigation = ({ onEnquiryOpen }) => {
             }`}
           >
             <div
-              className={`flex items-stretch rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200 overflow-hidden ${
-                activeCategory?.items?.length ? 'w-[460px]' : 'w-[240px]'
-              }`}
+              ref={menuPanelRef}
+              className="relative rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200"
             >
-              <div className="w-56 p-5 bg-[#ffffff]">
+              <div className="w-56 p-5 bg-[#ffffff] rounded-2xl">
                 <ul className="space-y-4">
                   {propertyCategories.map((category) => {
                     const isActive = activeCategory?.label === category.label
@@ -127,9 +134,9 @@ const Navigation = ({ onEnquiryOpen }) => {
                       <li key={category.label}>
                         <button
                           type="button"
-                          onClick={() => setActiveCategory(category)}
-                          onMouseEnter={() => setActiveCategory(category)}
-                          onFocus={() => setActiveCategory(category)}
+                          onClick={(e) => handleCategoryHover(category, e)}
+                          onMouseEnter={(e) => handleCategoryHover(category, e)}
+                          onFocus={(e) => handleCategoryHover(category, e)}
                           className={`w-full flex items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors ${
                             isActive ? 'text-primary-600' : 'text-neutral-900 hover:text-neutral-900'
                           }`}
@@ -144,24 +151,24 @@ const Navigation = ({ onEnquiryOpen }) => {
               </div>
 
               {activeCategory?.items?.length ? (
-                <>
-                  <div className="w-px bg-neutral-200" />
-                  <div className="w-56 p-5 bg-[#ffffff]">
-                    <ul className="space-y-4" style={{ paddingTop: submenuOffset }}>
-                      {activeCategory.items.map((item) => (
-                        <li key={item.label}>
-                          <a
-                            href={item.href}
-                            onClick={(e) => handleNavClick(e, item.href)}
-                            className="block text-sm font-semibold text-neutral-900 uppercase tracking-wide hover:text-primary-600 transition-colors"
-                          >
-                            {item.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </>
+                <div
+                  className="absolute left-full top-0 ml-3 w-56 rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200"
+                  style={{ marginTop: submenuOffset }}
+                >
+                  <ul className="space-y-4 p-5">
+                    {activeCategory.items.map((item) => (
+                      <li key={item.label}>
+                        <a
+                          href={item.href}
+                          onClick={(e) => handleNavClick(e, item.href)}
+                          className="block text-sm font-semibold text-neutral-900 uppercase tracking-wide hover:text-primary-600 transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
             </div>
           </div>
