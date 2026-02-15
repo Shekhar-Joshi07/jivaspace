@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { scrollToElement } from '@/lib/utils'
 import { mainNavItems, propertyCategories } from '@/data/navigation'
 
@@ -7,6 +8,8 @@ const Navigation = ({ onEnquiryOpen }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const location = useLocation()
+  const navigate = useNavigate()
   const defaultCategory =
     propertyCategories.find((category) => category.items?.length) ?? propertyCategories[0]
 
@@ -40,7 +43,18 @@ const Navigation = ({ onEnquiryOpen }) => {
       onEnquiryOpen()
       return
     }
-    scrollToElement(href.replace('#', ''))
+    if (href.startsWith('#')) {
+      const target = href.replace('#', '')
+      if (location.pathname !== '/') {
+        navigate(`/#${target}`)
+        return
+      }
+      scrollToElement(target)
+      return
+    }
+    if (href.startsWith('/')) {
+      navigate(href)
+    }
   }
 
   const handleToggleDropdown = (e) => {

@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
-import { scrollToElement } from '@/lib/utils'
+import { useNavigate } from 'react-router-dom'
 import heroVideo from '../../assets/herosection.mp4'
 
 const HeroSection = ({ onEnquiryOpen }) => {
+  const navigate = useNavigate()
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background */}
@@ -104,7 +106,7 @@ const HeroSection = ({ onEnquiryOpen }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-ghost"
-              onClick={() => scrollToElement('properties')}
+              onClick={() => navigate('/properties')}
             >
               View Properties
             </motion.button>

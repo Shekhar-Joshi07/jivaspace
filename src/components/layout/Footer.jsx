@@ -1,16 +1,16 @@
+import { Link } from 'react-router-dom'
 import logo from '../../assets/jivaSpace_Nav_Logo.png'
-import { scrollToElement } from '@/lib/utils'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
 
   const quickLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Properties', href: '#properties' },
-    { label: 'Amenities', href: '#amenities' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '/#home' },
+    { label: 'About', href: '/about' },
+    { label: 'Properties', href: '/properties' },
+    { label: 'Amenities', href: '/amenities' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   return (
@@ -50,16 +50,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      scrollToElement(link.href.replace('#', ''))
-                    }}
+                  <Link
+                    to={link.href}
                     className="text-dark-600 hover:text-primary-500 transition-colors text-sm"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

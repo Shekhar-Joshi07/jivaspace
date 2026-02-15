@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 const PropertyDetails = () => {
+  const navigate = useNavigate()
+
   return (
     <section
       id="specifications"
@@ -49,14 +52,15 @@ const PropertyDetails = () => {
             <h3 className="text-3xl font-bold text-primary-600 mb-4">{spec.type}</h3>
             <p className="text-lg text-neutral-700 mb-2">Area: {spec.area}</p>
             <p className="text-2xl font-bold text-neutral-900 mb-6">{spec.price}</p>
-            <motion.a
-              href="#contact"
+            <motion.button
+              type="button"
+              onClick={() => navigate('/contact')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary w-full text-center block"
             >
               View Details
-            </motion.a>
+            </motion.button>
           </motion.div>
         ))}
       </div>

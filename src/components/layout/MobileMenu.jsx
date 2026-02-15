@@ -1,5 +1,6 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { backdropVariants, mobileMenuVariants } from '@/lib/animations'
 import { scrollToElement } from '@/lib/utils'
 import { siteConfig } from '@/data/siteConfig'
@@ -8,6 +9,8 @@ import { mainNavItems, propertyCategories } from '@/data/navigation'
 const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
   const primaryNav = mainNavItems.slice(0, 2)
   const secondaryNav = mainNavItems.slice(2)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const handleClick = (e, href) => {
     e.preventDefault()
@@ -16,9 +19,21 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
       onEnquiryOpen()
       return
     }
-    const elementId = href.replace('#', '')
-    scrollToElement(elementId)
-    onClose()
+    if (href.startsWith('#')) {
+      const elementId = href.replace('#', '')
+      if (location.pathname !== '/') {
+        navigate(`/#${elementId}`)
+        onClose()
+        return
+      }
+      scrollToElement(elementId)
+      onClose()
+      return
+    }
+    if (href.startsWith('/')) {
+      navigate(href)
+      onClose()
+    }
   }
 
   return (

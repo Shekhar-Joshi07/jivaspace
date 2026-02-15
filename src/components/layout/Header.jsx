@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Navigation from './Navigation'
 import MobileMenu from './MobileMenu'
 import logo from '../../assets/jivaSpace_Nav_Logo.png'
@@ -8,6 +9,8 @@ import { scrollToElement } from '@/lib/utils'
 const Header = ({ onEnquiryOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +38,10 @@ const Header = ({ onEnquiryOpen }) => {
               href="#home"
               onClick={(e) => {
                 e.preventDefault()
+                if (location.pathname !== '/') {
+                  navigate('/#home')
+                  return
+                }
                 scrollToElement('home')
               }}
               className="flex items-center space-x-3 group"

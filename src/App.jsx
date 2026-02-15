@@ -1,12 +1,34 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import FloatingButtons from './components/cta/FloatingButtons'
 import Home from './pages/Home'
+import AboutPage from './pages/AboutPage'
+import Properties from './pages/Properties'
+import Amenities from './pages/Amenities'
+import Gallery from './pages/Gallery'
+import Contact from './pages/Contact'
 import EnquiryModal from './components/forms/EnquiryModal'
+import { scrollToElement } from './lib/utils'
 import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
 import preloaderLogo from './assets/JivaSpace LOGO.jpeg'
+
+const ScrollToHash = () => {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash) {
+      const target = location.hash.replace('#', '')
+      const timer = setTimeout(() => scrollToElement(target), 50)
+      return () => clearTimeout(timer)
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [location])
+
+  return null
+}
 
 function App() {
   const ONE_HOUR_MS = 60 * 60 * 1000
@@ -183,21 +205,31 @@ function App() {
           )}
         </motion.div>
       ) : (
-        <motion.div
-          key="app"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="min-h-screen"
-        >
-          <Header onEnquiryOpen={() => setIsEnquiryOpen(true)} />
-          <main className="pt-20">
-            <Home onEnquiryOpen={() => setIsEnquiryOpen(true)} />
-          </main>
-          <Footer />
-          <FloatingButtons onEnquiryOpen={() => setIsEnquiryOpen(true)} />
-          <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
-        </motion.div>
+        <BrowserRouter>
+          <motion.div
+            key="app"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen"
+          >
+            <Header onEnquiryOpen={() => setIsEnquiryOpen(true)} />
+            <main className="pt-20">
+              <ScrollToHash />
+              <Routes>
+                <Route path="/" element={<Home onEnquiryOpen={() => setIsEnquiryOpen(true)} />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/properties" element={<Properties />} />
+                <Route path="/amenities" element={<Amenities />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+            </main>
+            <Footer />
+            <FloatingButtons onEnquiryOpen={() => setIsEnquiryOpen(true)} />
+            <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
+          </motion.div>
+        </BrowserRouter>
       )}
     </AnimatePresence>
   )
