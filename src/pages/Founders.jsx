@@ -4,15 +4,15 @@ import founderKalpana from '../assets/clients_assets/FounderI2.jpeg'
 
 const founders = [
   {
-    name: 'Dr. Sapna Sikera',
+    name: 'Mrs Kalpana Yadav',
     title: 'Founder',
-    image: founderSapna,
+    image: founderKalpana,
     position: 'center 18%',
   },
   {
-    name: 'Mrs. Kalpana Yadav',
+    name: 'Dr. Sapna Sikera',
     title: 'Founder',
-    image: founderKalpana,
+    image: founderSapna,
     position: 'center 22%',
   },
 ]

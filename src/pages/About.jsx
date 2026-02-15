@@ -1,73 +1,96 @@
-import { motion } from 'framer-motion'
-
 const About = () => {
   return (
-    <div>
-      <section id="about" className="relative section-spacing overflow-hidden">
-        <div className="absolute inset-0 gradient-accent opacity-10" />
-        
-        <div className="section-container relative z-10">
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 bg-gradient-to-r from-primary-500 via-accent-purple to-accent-cyan bg-clip-text text-transparent">
-              About Us
-            </h1>
-            <p className="text-xl text-dark-600 max-w-3xl mx-auto">
-              Leading the future of real estate with innovation and excellence
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6"
-            >
-              <h2 className="text-4xl font-display font-bold text-dark-900">
-                Rishita Mulberry Heights
-              </h2>
-              <p className="text-lg text-dark-600 leading-relaxed">
-                Experience the epitome of modern living at Rishita Mulberry Heights. Nestled in the prime location
-                of Sushant Golf City, this luxurious residential project offers spacious apartments with world-class
-                amenities and stunning architecture.
-              </p>
-              <p className="text-lg text-dark-600 leading-relaxed">
-                Our commitment to quality and innovation has made us one of the most trusted names in real estate.
-                With over a decade of experience, we continue to set new standards in luxury living.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-effect p-8 rounded-3xl"
-            >
-              <h3 className="text-2xl font-bold text-dark-900 mb-6">Our Values</h3>
-              <div className="space-y-4">
-                {['Innovation', 'Quality', 'Sustainability', 'Customer First'].map((value, index) => (
-                  <motion.div
-                    key={value}
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    className="flex items-center space-x-4"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-purple" />
-                    <span className="text-dark-700 text-lg">{value}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+    <section id="about" className="relative section-spacing bg-white">
+      <div className="section-container">
+        <div className="text-center mb-16 md:mb-20">
+          <h1 className="text-2xl  font-display font-bold text-dark-500 mb-[5px]">
+            Let's Find the Right Space for You
+          </h1>
+          <p className="text-lg text-dark-600 max-w-3xl mx-auto leading-relaxed">
+            Discover your dream home with JivaSpace. Find tailored listings, expert advice, and
+            seamless support for your perfect property.
+          </p>
         </div>
-      </section>
-    </div>
+
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+          {[
+            {
+              title: 'Modern Villas',
+              body:
+                'Experience luxury living in a modern villa with stunning design, top amenities, and prime location.',
+              border: 'border-dark-700',
+              line: 'bg-dark-700',
+              icon: (
+                <svg viewBox="0 0 32 32" className="w-[60px] h-[60px]" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M4 26h24" />
+                  <path d="M6 26V12l10-6 10 6v14" />
+                  <path d="M12 26v-7h8v7" />
+                </svg>
+              ),
+            },
+            {
+              title: 'Apartments',
+              body:
+                'Discover stylish apartments with modern amenities, prime locations, and comfortable urban living spaces.',
+              border: 'border-dark-700',
+              line: 'bg-dark-700',
+              icon: (
+                <svg viewBox="0 0 32 32" className="w-[60px] h-[60px]" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M6 26V6h20v20" />
+                  <path d="M10 10h4v4h-4zM18 10h4v4h-4zM10 18h4v4h-4zM18 18h4v4h-4z" />
+                </svg>
+              ),
+            },
+            {
+              title: 'Family House',
+              body:
+                'Discover the ideal family house: spacious, safe, with excellent amenities, and located in a friendly neighborhood.',
+              border: 'border-primary-600',
+              line: 'bg-primary-600',
+              icon: (
+                <svg viewBox="0 0 32 32" className="w-[60px] h-[60px]" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M6 26h20" />
+                  <path d="M8 26V14l8-6 8 6v12" />
+                  <path d="M13 26v-6h6v6" />
+                  <path d="M16 6l2 2" />
+                </svg>
+              ),
+            },
+            {
+              title: 'Office Building',
+              body:
+                'Find the perfect office building: prime location, modern facilities, flexible spaces, and a professional environment.',
+              border: 'border-primary-600',
+              line: 'bg-primary-600',
+              icon: (
+                <svg viewBox="0 0 32 32" className="w-[60px] h-[60px]" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M5 26h22" />
+                  <path d="M8 26V6h10v20" />
+                  <path d="M18 26v-8h6v8" />
+                  <path d="M11 10h4M11 14h4M11 18h4" />
+                </svg>
+              ),
+            },
+          ].map((card, index) => (
+            <div
+              key={card.title}
+              className={`group relative border-2 ${card.border} pt-[76px] p-6 md:p-7 bg-white shadow-[0_12px_30px_-20px_rgba(15,23,42,0.35)] transition-transform duration-300 hover:-translate-y-1`}
+            >
+              <span
+                className={`pointer-events-none absolute inset-0 border-2 ${card.border} opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-[1.02]`}
+              />
+              <div className="absolute -top-[34px] left-6 right-6 z-10 flex items-center gap-3 text-dark-500">
+                <span className={`h-[2px] w-10 ${card.line}`} />
+                <span className="bg-white px-3 text-dark-500">{card.icon}</span>
+                <span className={`h-[2px] flex-1 ${card.line}`} />
+              </div>
+              <h3 className="text-xl font-semibold text-dark-500 mb-4">{card.title}</h3>
+              <p className="text-base text-dark-600 leading-relaxed">{card.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 

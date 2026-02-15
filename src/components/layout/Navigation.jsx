@@ -7,12 +7,15 @@ const Navigation = ({ onEnquiryOpen }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const defaultCategory =
+    propertyCategories.find((category) => category.items?.length) ?? propertyCategories[0]
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!dropdownRef.current) return
       if (!dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false)
+        setActiveCategory(null)
       }
     }
 
@@ -20,9 +23,19 @@ const Navigation = ({ onEnquiryOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  const closeDropdown = () => {
+    setIsDropdownOpen(false)
+    setActiveCategory(null)
+  }
+
+  const openDropdown = () => {
+    setIsDropdownOpen(true)
+    setActiveCategory((current) => current ?? defaultCategory ?? null)
+  }
+
   const handleNavClick = (e, href) => {
     e.preventDefault()
-    setIsDropdownOpen(false)
+    closeDropdown()
     if (href === '#contact' && onEnquiryOpen) {
       onEnquiryOpen()
       return
@@ -32,13 +45,11 @@ const Navigation = ({ onEnquiryOpen }) => {
 
   const handleToggleDropdown = (e) => {
     e.preventDefault()
-    setIsDropdownOpen((prev) => {
-      const next = !prev
-      if (next) {
-        setActiveCategory(null)
-      }
-      return next
-    })
+    if (isDropdownOpen) {
+      closeDropdown()
+    } else {
+      openDropdown()
+    }
   }
 
   return (
@@ -58,7 +69,12 @@ const Navigation = ({ onEnquiryOpen }) => {
           </li>
         ))}
 
-        <li className="relative" ref={dropdownRef}>
+        <li
+          className="relative"
+          ref={dropdownRef}
+          onMouseEnter={openDropdown}
+          onMouseLeave={closeDropdown}
+        >
           <button
             type="button"
             onClick={handleToggleDropdown}
@@ -80,12 +96,12 @@ const Navigation = ({ onEnquiryOpen }) => {
             }`}
           >
             <div
-              className={`flex rounded-2xl bg-[#f3eee2]/95 shadow-xl border border-[#e7dcc3] backdrop-blur-md overflow-hidden ${
-                activeCategory?.items?.length ? 'min-w-[380px]' : 'min-w-[200px]'
+              className={`flex rounded-xl bg-[#ffffff] shadow-xl border border-neutral-200 overflow-hidden ${
+                activeCategory?.items?.length ? 'min-w-[340px]' : 'min-w-[240px]'
               }`}
             >
-              <div className="w-44 p-4">
-                <ul className="space-y-3">
+              <div className="w-56 p-4 bg-[#ffffff]">
+                <ul className="space-y-4">
                   {propertyCategories.map((category) => {
                     const isActive = activeCategory?.label === category.label
                     return (
@@ -93,12 +109,14 @@ const Navigation = ({ onEnquiryOpen }) => {
                         <button
                           type="button"
                           onClick={() => setActiveCategory(category)}
-                          className={`w-full flex items-center justify-between text-sm font-medium uppercase tracking-wide transition-colors ${
-                            isActive ? 'text-primary-600' : 'text-dark-500 hover:text-dark-900'
+                          onMouseEnter={() => setActiveCategory(category)}
+                          onFocus={() => setActiveCategory(category)}
+                          className={`w-full flex items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors ${
+                            isActive ? 'text-primary-600' : 'text-black hover:text-black'
                           }`}
                         >
                           <span>{category.label}</span>
-                          <span className={`${isActive ? 'text-primary-600' : 'text-dark-400'}`}>&gt;</span>
+                          <span className={`${isActive ? 'text-primary-600' : 'text-neutral-400'}`}>&gt;</span>
                         </button>
                       </li>
                     )
@@ -108,15 +126,15 @@ const Navigation = ({ onEnquiryOpen }) => {
 
               {activeCategory?.items?.length ? (
                 <>
-                  <div className="w-px bg-[#e7dcc3]" />
-                  <div className="flex-1 p-4">
-                    <ul className="space-y-3">
+                  <div className="w-px bg-neutral-200" />
+                  <div className="w-52 p-5 bg-[#ffffff]">
+                    <ul className="space-y-4">
                       {activeCategory.items.map((item) => (
                         <li key={item.label}>
                           <a
                             href={item.href}
                             onClick={(e) => handleNavClick(e, item.href)}
-                            className="block text-sm font-semibold text-dark-700 uppercase tracking-wide hover:text-primary-600 transition-colors"
+                            className="block text-sm font-semibold text-black uppercase tracking-wide hover:text-primary-600 transition-colors"
                           >
                             {item.label}
                           </a>
