@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "npx wrangler pages deploy dist --project-name jivaspace",
+    "deploy": "npx wrangler pages deploy dist",
     "preview": "vite preview"
   },
   "dependencies": {
