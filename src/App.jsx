@@ -14,6 +14,9 @@ import MigsunCentral from './pages/MigsunCentral'
 import MigsunJanpath from './pages/MigsunJanpath'
 import FelixImperial from './pages/FelixImperial'
 import TheGalleria from './pages/TheGalleria'
+import Flats from './pages/Flats'
+import VedicVillage from './pages/VedicVillage'
+import LucknowGreens from './pages/LucknowGreens'
 import EnquiryModal from './components/forms/EnquiryModal'
 import { scrollToElement } from './lib/utils'
 import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
@@ -30,6 +33,21 @@ const ScrollToHash = () => {
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }, [location])
+
+  return null
+}
+
+const PropertyEnquiryAutoOpen = ({ onOpen }) => {
+  const location = useLocation()
+  const lastOpenedRef = useRef('')
+
+  useEffect(() => {
+    const { pathname } = location
+    if (!pathname.startsWith('/properties/')) return
+    if (lastOpenedRef.current === pathname) return
+    lastOpenedRef.current = pathname
+    onOpen()
+  }, [location, onOpen])
 
   return null
 }
@@ -227,10 +245,12 @@ function App() {
             <Header onEnquiryOpen={() => setIsEnquiryOpen(true)} />
             <main className="pt-20">
               <ScrollToHash />
+              <PropertyEnquiryAutoOpen onOpen={() => setIsEnquiryOpen(true)} />
               <Routes>
                 <Route path="/" element={<Home onEnquiryOpen={() => setIsEnquiryOpen(true)} />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/properties" element={<Properties />} />
+                <Route path="/properties/flats" element={<Flats />} />
                 <Route path="/amenities" element={<Amenities />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
@@ -238,6 +258,8 @@ function App() {
                 <Route path="/properties/migsun-janpath" element={<MigsunJanpath />} />
                 <Route path="/properties/felix-imperial" element={<FelixImperial />} />
                 <Route path="/properties/the-galleria" element={<TheGalleria />} />
+                <Route path="/properties/vedic-village" element={<VedicVillage />} />
+                <Route path="/properties/lucknow-greens" element={<LucknowGreens />} />
               </Routes>
             </main>
             <Footer />

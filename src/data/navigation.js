@@ -10,7 +10,7 @@ export const propertyCategories = [
   {
     label: 'Residential',
     items: [
-      { label: 'Flats', href: '/properties' },
+      { label: 'Flats', href: '/properties/flats' },
     ],
   },
   {
@@ -25,8 +25,8 @@ export const propertyCategories = [
   {
     label: 'Plots',
     items: [
-      { label: 'Vedic Village', href: '/properties' },
-      { label: 'Lucknow Greens', href: '/properties' },
+      { label: 'Vedic Village', href: '/properties/vedic-village' },
+      { label: 'Lucknow Greens', href: '/properties/lucknow-greens' },
     ],
   },
   {
