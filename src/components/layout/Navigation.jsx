@@ -96,12 +96,7 @@ const Navigation = ({ onEnquiryOpen }) => {
           </li>
         ))}
 
-        <li
-          className="relative"
-          ref={dropdownRef}
-          onMouseEnter={openDropdown}
-          onMouseLeave={closeDropdown}
-        >
+        <li className="relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={handleToggleDropdown}
