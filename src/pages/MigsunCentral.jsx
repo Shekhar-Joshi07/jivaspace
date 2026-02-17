@@ -6,6 +6,9 @@ import amenityClubhouse from '../assets/amenities/amenity-clubhouse.svg'
 import amenityPower from '../assets/amenities/amenity-power.svg'
 import amenitySecurity from '../assets/amenities/amenity-security.svg'
 import amenityParking from '../assets/amenities/amenity-parking.svg'
+import { propertyGalleryImages } from '../data/propertyGalleryImages'
+import GalleryCarousel from '../components/property/GalleryCarousel'
+import { propertyHeroImages } from '../data/propertyHeroImages'
 
 const MigsunCentral = () => {
   const openEnquiry = () => {
@@ -13,6 +16,10 @@ const MigsunCentral = () => {
       window.dispatchEvent(new CustomEvent('open-enquiry'))
     }
   }
+  const galleryImages = propertyGalleryImages['migsun-central']?.length
+    ? propertyGalleryImages['migsun-central']
+    : [clientImage2, clientImage2, clientImage2, clientImage2, clientImage2, clientImage2]
+  const heroImage = propertyHeroImages['migsun-central'] || clientImage2
   return (
     <section className="section-spacing">
       <div className="section-container">
@@ -56,7 +63,7 @@ const MigsunCentral = () => {
             <div className="bg-gradient-to-br from-[#cfe7ff] to-[#eaf6ff] p-3 sm:p-4 h-[240px] sm:h-[280px] lg:h-full min-h-0">
               <div className="h-full w-full min-h-0 overflow-hidden rounded-[28px] border-[3px] border-primary-500/60 shadow-xl">
                 <img
-                  src={clientImage2}
+                  src={heroImage}
                   alt="Migsun Central elevation"
                   className="h-full w-full object-cover object-center"
                   loading="lazy"
@@ -213,7 +220,7 @@ const MigsunCentral = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8">
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
             <h3 className="text-lg font-semibold text-dark-500">Floor Plans</h3>
             <div className="mt-4 space-y-3">
@@ -234,25 +241,7 @@ const MigsunCentral = () => {
 
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
             <h3 className="text-lg font-semibold text-dark-500 mb-4">Our Gallery</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                clientImage2,
-                clientImage2,
-                clientImage2,
-                clientImage2,
-                clientImage2,
-                clientImage2,
-              ].map((src, index) => (
-                <div key={index} className="aspect-[4/3] overflow-hidden rounded-lg bg-neutral-100">
-                  <img
-                    src={src}
-                    alt={`Gallery ${index + 1}`}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
+            <GalleryCarousel images={galleryImages} altPrefix="Migsun Central" compact />
           </div>
         </div>
 

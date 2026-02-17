@@ -1,4 +1,4 @@
-import clientImage1 from '../../assets/clients_assets/client image 1.jpeg'
+import clientImage1 from '../../assets/Untitleddesign.jpeg'
 
 const VisionMission = () => {
   return (

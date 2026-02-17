@@ -11,12 +11,7 @@ import Amenities from './pages/Amenities'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import MigsunCentral from './pages/MigsunCentral'
-import MigsunJanpath from './pages/MigsunJanpath'
-import FelixImperial from './pages/FelixImperial'
-import TheGalleria from './pages/TheGalleria'
-import Flats from './pages/Flats'
-import VedicVillage from './pages/VedicVillage'
-import LucknowGreens from './pages/LucknowGreens'
+import PropertyPage from './pages/PropertyPage'
 import EnquiryModal from './components/forms/EnquiryModal'
 import { scrollToElement } from './lib/utils'
 import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
@@ -250,16 +245,12 @@ function App() {
                 <Route path="/" element={<Home onEnquiryOpen={() => setIsEnquiryOpen(true)} />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/properties" element={<Properties />} />
-                <Route path="/properties/flats" element={<Flats />} />
                 <Route path="/amenities" element={<Amenities />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/properties/migsun-central" element={<MigsunCentral />} />
-                <Route path="/properties/migsun-janpath" element={<MigsunJanpath />} />
-                <Route path="/properties/felix-imperial" element={<FelixImperial />} />
-                <Route path="/properties/the-galleria" element={<TheGalleria />} />
-                <Route path="/properties/vedic-village" element={<VedicVillage />} />
-                <Route path="/properties/lucknow-greens" element={<LucknowGreens />} />
+            
+                <Route path="/properties/:slug" element={<PropertyPage />} />
               </Routes>
             </main>
             <Footer />
