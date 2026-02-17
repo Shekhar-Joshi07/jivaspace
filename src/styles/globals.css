@@ -100,3 +100,75 @@
 .swal2-icon {
   margin: 0.25rem auto 0.5rem !important;
 }
+
+.gallery-rotator {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gallery-rotator__inner {
+  --w: clamp(140px, 20vw, 210px);
+  --h: clamp(200px, 28vw, 280px);
+  --translateZ: calc((var(--w) + var(--h)) * 0.6);
+  --rotateX: -15deg;
+  --perspective: 1200px;
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) perspective(var(--perspective));
+  animation: gallery-rotating 20s linear infinite;
+}
+
+@keyframes gallery-rotating {
+  from {
+    transform: translate(-50%, -50%) perspective(var(--perspective))
+      rotateX(var(--rotateX)) rotateY(0);
+  }
+  to {
+    transform: translate(-50%, -50%) perspective(var(--perspective))
+      rotateX(var(--rotateX)) rotateY(1turn);
+  }
+}
+
+.gallery-rotator__card {
+  position: absolute;
+  inset: 0;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 35px -18px rgba(0, 0, 0, 0.45);
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+    translateZ(var(--translateZ));
+  background: #0d1225;
+  cursor: pointer;
+}
+
+.gallery-rotator__img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+
+@media (max-width: 768px) {
+  .gallery-rotator {
+    height: 380px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-rotator__inner {
+    animation: none;
+  }
+}

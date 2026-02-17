@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import MigsunCentral from './pages/MigsunCentral'
 import PropertyPage from './pages/PropertyPage'
 import EnquiryModal from './components/forms/EnquiryModal'
+import GalleryModal from './components/gallery/GalleryModal'
 import { scrollToElement } from './lib/utils'
 import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
 import preloaderLogo from './assets/JivaSpace LOGO.jpeg'
@@ -256,6 +257,7 @@ function App() {
             <Footer />
             <FloatingButtons onEnquiryOpen={() => setIsEnquiryOpen(true)} />
             <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
+            <GalleryModal />
           </motion.div>
         </BrowserRouter>
       )}

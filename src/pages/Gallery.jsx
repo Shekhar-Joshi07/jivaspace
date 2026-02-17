@@ -1,12 +1,20 @@
 import { motion } from 'framer-motion'
-import clientImage1 from '../assets/clients_assets/client image 1.jpeg'
-import clientImage2 from '../assets/clients_assets/client image 2.jpeg'
-import clientImage3 from '../assets/clients_assets/client image 3.jpeg'
+import ekana1 from '../assets/clients_assets/Ekana/gallery/Screenshot 2026-02-17 003833.png'
+import ekana2 from '../assets/clients_assets/Ekana/gallery/Screenshot 2026-02-17 003619.png'
+import oro1 from '../assets/clients_assets/Oro constella/gallery/Screenshot 2026-02-17 005416.png'
+import ekana3 from '../assets/clients_assets/Ekana/Screenshot 2026-02-17 003506.png'
+import eldico1 from '../assets/clients_assets/eldico solano/Screenshot 2026-02-17 111444.png'
+import shalimar1 from '../assets/clients_assets/Shalimar Valencia/gallery/Screenshot 2026-02-17 105727.png'
+import rishita1 from '../assets/clients_assets/rishita mulberry/Screenshot 2026-02-17 110214.png'
 
 const galleryImages = [
-  { src: clientImage1, label: 'Exterior view' },
-  { src: clientImage2, label: 'Entry lobby' },
-  { src: clientImage3, label: 'Living space' },
+  { src: ekana1, color: '142, 249, 252' },
+  { src: ekana2, color: '142, 252, 204' },
+  { src: oro1, color: '142, 252, 157' },
+  { src: ekana3, color: '215, 252, 142' },
+  { src: eldico1, color: '252, 252, 142' },
+  { src: shalimar1, color: '252, 208, 142' },
+  { src: rishita1, color: '252, 142, 142' },
 ]
 
 const Gallery = () => {
@@ -17,7 +25,7 @@ const Gallery = () => {
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-center mb-20"
+            className="text-center mb-10"
           >
             <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 bg-gradient-to-r from-accent-cyan via-primary-500 to-accent-purple bg-clip-text text-transparent">
               Gallery
@@ -27,45 +35,36 @@ const Gallery = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryImages.map((image, index) => (
-              <motion.div
-                key={image.label}
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="group relative overflow-visible rounded-3xl border border-primary-200/30 bg-neutral-50/80 shadow-xl transition-all cursor-pointer"
-              >
-                <div className="relative -mt-6 px-6">
-                  <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-dark-50 shadow-xl">
-                    <img
-                      src={image.src}
-                      alt={image.label}
-                      className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-0"
-                      loading="lazy"
-                    />
-                    <img
-                      src={image.src}
-                      alt={image.label}
-                      className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-50/85 via-dark-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-end p-6">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <h3 className="text-neutral-50 font-semibold">{image.label}</h3>
-                        <p className="text-neutral-100/70 text-sm">Tap to view</p>
-                      </div>
-                    </div>
-                  </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="gallery-rotator"
+            style={{ marginTop: '-80px' }}
+          >
+            <div className="gallery-rotator__inner" style={{ '--quantity': galleryImages.length }}>
+              {galleryImages.map((image, index) => (
+                <div
+                  key={image.src}
+                  className="gallery-rotator__card"
+                  style={{ '--index': index, '--color-card': image.color }}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => window.dispatchEvent(new CustomEvent('gallery:open', { detail: image.src }))}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      window.dispatchEvent(new CustomEvent('gallery:open', { detail: image.src }))
+                    }
+                  }}
+                >
+                  <div
+                    className="gallery-rotator__img"
+                    style={{ backgroundImage: `url(${image.src})` }}
+                  />
                 </div>
-                <div className="px-6 pb-6 pt-5">
-                  <p className="text-sm text-neutral-600">Client-provided render</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
