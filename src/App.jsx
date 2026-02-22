@@ -11,6 +11,7 @@ import Amenities from './pages/Amenities'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import MigsunCentral from './pages/MigsunCentral'
+import Skyom from './pages/Skyom'
 import PropertyPage from './pages/PropertyPage'
 import EnquiryModal from './components/forms/EnquiryModal'
 import { scrollToElement } from './lib/utils'
@@ -249,7 +250,7 @@ function App() {
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/properties/migsun-central" element={<MigsunCentral />} />
-            
+                <Route path="/properties/skyom" element={<Skyom />} />
                 <Route path="/properties/:slug" element={<PropertyPage />} />
               </Routes>
             </main>

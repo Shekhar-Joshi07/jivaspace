@@ -1,6 +1,12 @@
 import clientImage2 from '../../assets/clients_assets/client image 2.jpeg'
 
 const ApartmentCta = () => {
+  const openEnquiry = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-enquiry'))
+    }
+  }
+
   return (
     <section className="section-spacing">
       <div className="section-container">
@@ -24,9 +30,13 @@ const ApartmentCta = () => {
                 Experience the perfect blend of comfort, style, and convenience in your new home.
                 Let us guide you to the modern apartment you&apos;ve always dreamed of.
               </p>
-              <a href="#contact" className="btn-primary inline-flex min-w-[180px] justify-center">
+              <button
+                type="button"
+                onClick={openEnquiry}
+                className="btn-primary inline-flex min-w-[180px] justify-center"
+              >
                 Book Now
-              </a>
+              </button>
             </div>
           </div>
         </div>

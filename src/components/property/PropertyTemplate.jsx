@@ -219,7 +219,7 @@ const PropertyTemplate = ({ property = {} }) => {
             </div>
 
             <form className="mt-8 space-y-6">
-              <div>
+              {/* <div>
                 <label className="block text-sm text-dark-500 mb-2">Your Name</label>
                 <input type="text" className="input-field" placeholder="Enter your name" />
               </div>
@@ -230,7 +230,7 @@ const PropertyTemplate = ({ property = {} }) => {
               <div>
                 <label className="block text-sm text-dark-500 mb-2">Your Email</label>
                 <input type="email" className="input-field" placeholder="Enter email address" />
-              </div>
+              </div> */}
               <button type="submit" className="btn-primary w-full">Send Message</button>
             </form>
           </div>
