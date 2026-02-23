@@ -4,17 +4,21 @@ import founderKalpana from '../assets/clients_assets/FounderI2.jpeg'
 
 const founders = [
   {
-    name: 'Mrs Kalpana Yadav',
-    title: 'Founder',
-    image: founderSapna,
-    position: 'center 22%',
-  },
-    {
-    name: 'Dr. Sapna Sikera',
+    name: 'Mrs. Kalpana Yadav',
     title: 'Founder',
     image: founderKalpana,
+    position: 'center 22%',
+    bio:
+      'Mrs. Kalpana Yadav is the visionary founder of our real estate company, bringing years of dedication, integrity, and market expertise to the industry. With a strong commitment to transparency and customer satisfaction, she has built the company on the foundation of trust, quality, and long-term relationships. Her leadership focuses on delivering premium residential and commercial properties that combine strategic location, modern design, and strong investment value. Under her guidance, the company continues to help families find their dream homes and investors secure profitable opportunities across Lucknow. Driven by passion and a deep understanding of the real estate market, Mrs. Yadav ensures that every project reflects excellence, reliability, and a customer-first approach.',
+  },
+  {
+    name: 'Dr. Sapna Sikera',
+    title: 'Founder',
+    image: founderSapna,
     position: 'center 18%',
-  }
+    bio:
+      'Dr. Sapna Sikera is a dynamic leader and visionary founder dedicated to redefining excellence in the real estate industry. With a strong professional background and a deep understanding of client needs, she has built the organization on values of integrity, transparency, and long-term trust. Her leadership emphasizes delivering thoughtfully planned residential and commercial developments that offer both lifestyle comfort and strong investment potential. Known for her strategic approach and commitment to quality, Dr. Sikera ensures that every project reflects innovation, reliability, and customer satisfaction. Under her guidance, the company continues to create valuable opportunities for homeowners and investors across Lucknow, turning aspirations into reality.',
+  },
 ]
 
 const Founders = () => {
@@ -59,8 +63,7 @@ const Founders = () => {
                 {founder.name}
               </h3>
               <p className="text-base text-white/80 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua.
+                {founder.bio}
               </p>
             </div>
           </motion.div>

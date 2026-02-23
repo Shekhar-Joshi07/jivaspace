@@ -197,14 +197,13 @@ const TheGalleria = () => {
             <h3 className="text-lg font-semibold text-dark-500">Project Site Address</h3>
             <div className="mt-4 space-y-3 text-sm text-dark-500">
               <p>
-                <span className="font-semibold text-dark-500">Address :</span> Xpert Edge Realtors, 308 Royal Plaza,
-                Sushant Golf City, Lucknow
+                <span className="font-semibold text-dark-500">Address :</span>  Lucknow
               </p>
               <p>
                 <span className="font-semibold text-dark-500">Call Us :</span> +91-8090083488
               </p>
               <p>
-                <span className="font-semibold text-dark-500">Project RERA :</span> UPRERAPRJ2629 (PH-1)
+                <span className="font-semibold text-dark-500">Project RERA :</span> 
               </p>
             </div>
             <div className="mt-6 h-32 w-32 rounded-lg border border-neutral-200 bg-neutral-100" />
