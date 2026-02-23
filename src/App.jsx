@@ -9,7 +9,6 @@ import AboutPage from './pages/AboutPage'
 import Properties from './pages/Properties'
 import Amenities from './pages/Amenities'
 import Gallery from './pages/Gallery'
-import Contact from './pages/Contact'
 import MigsunCentral from './pages/MigsunCentral'
 import Skyom from './pages/Skyom'
 import PropertyPage from './pages/PropertyPage'
@@ -249,7 +248,6 @@ function App() {
                 <Route path="/properties" element={<Properties />} />
                 <Route path="/amenities" element={<Amenities />} />
                 <Route path="/gallery" element={<Gallery />} />
-                <Route path="/contact" element={<Contact />} />
                 <Route path="/properties/migsun-central" element={<MigsunCentral />} />
                 <Route path="/properties/skyom" element={<Skyom />} />
                 <Route path="/properties/:slug" element={<PropertyPage />} />

@@ -3,6 +3,7 @@ import amenityPool from '../../assets/amenities/amenity-pool.svg'
 import amenityKids from '../../assets/amenities/amenity-kids.svg'
 import amenityGym from '../../assets/amenities/amenity-gym.svg'
 import amenityClubhouse from '../../assets/amenities/amenity-clubhouse.svg'
+import amenityGarden from '../../assets/amenities/amenity-garden.svg'
 import amenityPower from '../../assets/amenities/amenity-power.svg'
 import amenitySecurity from '../../assets/amenities/amenity-security.svg'
 import amenityParking from '../../assets/amenities/amenity-parking.svg'
@@ -34,6 +35,59 @@ const defaultAmenities = [
   { label: 'Car Parking', icon: amenityParking },
 ]
 
+const amenityIconMap = {
+  'Swimming Pool': amenityPool,
+  'Children Play Area': amenityKids,
+  'Kids Play Area': amenityKids,
+  'Gym Area': amenityGym,
+  'Gym': amenityGym,
+  'Club House': amenityClubhouse,
+  'Power Backup': amenityPower,
+  'Power Backup (Common)': amenityPower,
+  'Street Lights': amenityPower,
+  'Water Supply': amenityPool,
+  'Drainage System': amenityPool,
+  'Drainage': amenityPool,
+  'High Speed Elevators': amenityPower,
+  'Escalators & Lifts': amenityPower,
+  'Lift Facility': amenityPower,
+  'CCTV Camera': amenitySecurity,
+  'CCTV Security': amenitySecurity,
+  'CCTV Surveillance': amenitySecurity,
+  'CCTV': amenitySecurity,
+  '24x7 Security': amenitySecurity,
+  'Gated Community': amenitySecurity,
+  'Gated Security': amenitySecurity,
+  'Gated Township': amenitySecurity,
+  'Car Parking': amenityParking,
+  'Covered Parking': amenityParking,
+  'Private Parking': amenityParking,
+  'Parking Area': amenityParking,
+  'Ample Parking': amenityParking,
+  'Basement Parking': amenityParking,
+  'Parking': amenityParking,
+  'Wide Roads': amenityParking,
+  'Internal Roads': amenityParking,
+  'Modern Lobby': amenityClubhouse,
+  'Food Court': amenityClubhouse,
+  'High Footfall Location': amenityClubhouse,
+  'Temple': amenityClubhouse,
+  'Landscaped Garden': amenityGarden,
+  'Landscaped Gardens': amenityGarden,
+  'Green Environment': amenityGarden,
+  'Green Landscaping': amenityGarden,
+  'Park & Green Area': amenityGarden,
+  'Green Park': amenityGarden,
+  'Garden Area': amenityGarden,
+  'Jogging Track': amenityGarden,
+}
+
+const fallbackAmenityIcon = (
+  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.5l2.4 4.8 5.3.8-3.8 3.7.9 5.3L12 14.7l-4.8 2.4.9-5.3-3.8-3.7 5.3-.8L12 2.5z" />
+  </svg>
+)
+
 const defaultFloorPlans = [
   'Floor Plan 2BHK (900 sq.ft)',
   'Floor Plan 3BHK (1080 sq.ft)',
@@ -61,7 +115,7 @@ const defaultNearbyPlaces = [
 const defaultContact = {
   name: '',
   phone: '+91-8090083488',
-  email: 'xpertedgerealtors@gmail.com',
+  email: 'info@jivaspace.com',
   address: 'Xpert Edge Realtors, 308 Royal Plaza, Sushant Golf City, Lucknow',
   projectRera: 'UPRERAPRJ2629 (PH-1)',
 }
@@ -80,6 +134,7 @@ const PropertyTemplate = ({ property = {} }) => {
   const reraNumber = property.reraNumber || defaultHero.reraNumber
   const reraWebsite = property.reraWebsite || defaultHero.reraWebsite
   const displayName = property.displayName || name
+  const logo = property.logo || null
   const heroAlt = property.heroAlt || `${displayName} elevation`
   const heroImage = property.heroImage || clientImage2
   const description =
@@ -107,11 +162,6 @@ const PropertyTemplate = ({ property = {} }) => {
         <div className="overflow-hidden rounded-3xl bg-neutral-100 shadow-2xl lg:h-[460px]">
           <div className="grid lg:h-full lg:grid-cols-[1.1fr_1.4fr]">
             <div className="bg-[#f4efe6] p-6 sm:p-8 lg:h-full">
-              <div className="text-xs font-semibold uppercase tracking-wider text-dark-500">
-                Project RERA No.: {reraNumber}
-              </div>
-              <div className="text-xs text-dark-500">{reraWebsite}</div>
-
               <div className="mt-4 flex items-center gap-5">
                 <div className="text-3xl sm:text-4xl font-display font-bold text-primary-600">
                   {heroPrimary}
@@ -130,9 +180,11 @@ const PropertyTemplate = ({ property = {} }) => {
                 <h1 className="text-4xl sm:text-5xl font-display font-bold text-dark-500">
                   {heroHeadline}
                 </h1>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#0c8b4c]">
-                  {heroSubheadline}
-                </h2>
+                {heroSubheadline ? (
+                  <h2 className="text-3xl sm:text-4xl font-bold text-[#0c8b4c]">
+                    {heroSubheadline}
+                  </h2>
+                ) : null}
               </div>
 
               <div className="mt-6 inline-block rounded-2xl bg-gradient-to-r from-[#0c8b4c] to-[#0a6c8b] px-6 py-3 text-white shadow-lg">
@@ -158,13 +210,23 @@ const PropertyTemplate = ({ property = {} }) => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-display font-semibold text-dark-500">
-                  {displayName}
-                </h2>
+                <div className="flex flex-wrap items-center gap-4">
+                  {logo ? (
+                    <img
+                      src={logo}
+                      alt={`${displayName} logo`}
+                      className="h-12 w-auto object-contain"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <h2 className="text-2xl sm:text-3xl font-display font-semibold text-dark-500">
+                    {displayName}
+                  </h2>
+                </div>
                 <div className="mt-2 flex items-center gap-2 text-sm text-dark-500">
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-dark-500">
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
@@ -176,12 +238,6 @@ const PropertyTemplate = ({ property = {} }) => {
               </div>
               <div className="flex items-center gap-3">
                 <button type="button" onClick={openEnquiry} className="btn-primary px-8">Booking Now</button>
-                <button className="h-12 w-12 rounded-full border border-neutral-200 bg-white text-dark-500 shadow-sm hover:shadow-md">
-                  <svg viewBox="0 0 24 24" className="mx-auto h-5 w-5" fill="currentColor" aria-hidden="true">
-                    <path d="M12 3a1 1 0 011 1v8.6l2.2-2.2a1 1 0 011.4 1.4l-3.9 3.9a1 1 0 01-1.4 0l-3.9-3.9a1 1 0 011.4-1.4L11 12.6V4a1 1 0 011-1z" />
-                    <path d="M5 19a1 1 0 011-1h12a1 1 0 011 1v1a1 1 0 01-1 1H6a1 1 0 01-1-1v-1z" />
-                  </svg>
-                </button>
               </div>
             </div>
 
@@ -209,16 +265,33 @@ const PropertyTemplate = ({ property = {} }) => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
-            <h3 className="text-2xl font-display font-semibold text-dark-500">
-              {contact.name || displayName}
-            </h3>
+          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl lg:self-start">
+            <div className="flex flex-wrap items-center gap-4">
+              {logo ? (
+                <img
+                  src={logo}
+                  alt={`${displayName} logo`}
+                  className="h-12 w-auto object-contain"
+                  loading="lazy"
+                />
+              ) : null}
+              <h3 className="text-2xl font-display font-semibold text-dark-500">
+                {contact.name || displayName}
+              </h3>
+            </div>
             <div className="mt-4 space-y-2 text-sm text-dark-500">
               <p><span className="font-semibold text-dark-500">Call Us :</span> {contact.phone}</p>
               <p><span className="font-semibold text-dark-500">Email :</span> {contact.email}</p>
+              <p><span className="font-semibold text-dark-500">Address :</span> {contact.address}</p>
             </div>
 
-            <form className="mt-8 space-y-6">
+            <form
+              className="mt-8 space-y-6"
+              onSubmit={(event) => {
+                event.preventDefault()
+                openEnquiry()
+              }}
+            >
               {/* <div>
                 <label className="block text-sm text-dark-500 mb-2">Your Name</label>
                 <input type="text" className="input-field" placeholder="Enter your name" />
@@ -236,7 +309,7 @@ const PropertyTemplate = ({ property = {} }) => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
             <div className="grid gap-6 md:grid-cols-2">
               {units.map((unit) => (
@@ -258,40 +331,31 @@ const PropertyTemplate = ({ property = {} }) => {
               Our Amenities
             </h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-              {amenities.map((amenity) => (
-                <div
-                  key={amenity.label}
-                  className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-5 text-center text-sm font-semibold text-dark-500 shadow-sm"
-                >
-                  <img src={amenity.icon} alt="" className="h-8 w-8 opacity-80" aria-hidden="true" />
-                  <span>{amenity.label}</span>
-                </div>
-              ))}
+              {amenities.map((amenity) => {
+                const label = typeof amenity === 'string' ? amenity : amenity.label
+                const icon = typeof amenity === 'string'
+                  ? amenityIconMap[label]
+                  : amenity.icon || amenityIconMap[label]
+                return (
+                  <div
+                    key={label}
+                    className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-5 text-center text-sm font-semibold text-dark-500 shadow-sm"
+                  >
+                    {icon ? (
+                      <img src={icon} alt="" className="h-8 w-8 opacity-80" aria-hidden="true" />
+                    ) : (
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-primary-600">
+                        {fallbackAmenityIcon}
+                      </span>
+                    )}
+                    <span>{label}</span>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
-            <h3 className="text-lg font-semibold text-dark-500">Project Site Address</h3>
-            <div className="mt-4 space-y-3 text-sm text-dark-500">
-              <p>
-                <span className="font-semibold text-dark-500">Address :</span> {contact.address}
-              </p>
-              <p>
-                <span className="font-semibold text-dark-500">Call Us :</span> {contact.phone}
-              </p>
-              <p>
-                <span className="font-semibold text-dark-500">Project RERA :</span> {contact.projectRera}
-              </p>
-            </div>
-            <div className="mt-6 h-32 w-32 rounded-lg border border-neutral-200 bg-neutral-100" />
-            <p className="mt-4 text-xs text-dark-500">
-              Rera Website: https://www.up-rera.in/
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-8 lg:grid-cols-2">
-          <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl lg:self-start">
             <h3 className="text-lg font-semibold text-dark-500">Floor Plans</h3>
             <div className="mt-4 space-y-3">
               {floorPlans.map((item) => (
@@ -305,10 +369,11 @@ const PropertyTemplate = ({ property = {} }) => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
-            <h3 className="text-lg font-semibold text-dark-500 mb-4">Our Gallery</h3>
-            <GalleryCarousel images={galleryImages} altPrefix={displayName} compact />
-          </div>
+        </div>
+
+        <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
+          <h3 className="text-lg font-semibold text-dark-500 mb-4">Our Gallery</h3>
+          <GalleryCarousel images={galleryImages} altPrefix={displayName} compact />
         </div>
 
         <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">

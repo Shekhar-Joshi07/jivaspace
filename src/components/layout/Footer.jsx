@@ -4,6 +4,11 @@ import { siteConfig } from '@/data/siteConfig'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const openPropertiesMenu = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-properties-menu'))
+    }
+  }
 
   const quickLinks = [
     { label: 'Home', href: '/#home' },
@@ -11,7 +16,6 @@ const Footer = () => {
     { label: 'Properties', href: '/properties' },
     { label: 'Amenities', href: '/amenities' },
     { label: 'Gallery', href: '/gallery' },
-    { label: 'Contact', href: '/contact' },
   ]
   const socialLinks = [
     {
@@ -91,12 +95,22 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-dark-600 hover:text-primary-500 transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.href === '/properties' ? (
+                    <button
+                      type="button"
+                      onClick={openPropertiesMenu}
+                      className="text-dark-600 hover:text-primary-500 transition-colors text-sm"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-dark-600 hover:text-primary-500 transition-colors text-sm"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -108,7 +122,7 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="text-dark-600">
                 <span className="block font-medium text-dark-800">Location</span>
-                Sushant Golf City, Lucknow
+                , Lucknow
               </li>
               <li className="text-dark-600">
                 <span className="block font-medium text-dark-800">Phone</span>
@@ -134,9 +148,9 @@ const Footer = () => {
             <a href="#" className="text-dark-600 hover:text-primary-500 text-sm transition-colors">
               Terms of Service
             </a>
-            <span className="text-dark-600 text-sm">
+            {/* <span className="text-dark-600 text-sm">
               RERA: UPRERAxxxxxxxxxx
-            </span>
+            </span> */}
           </div>
         </div>
       </div>

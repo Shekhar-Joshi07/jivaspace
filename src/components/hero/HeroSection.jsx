@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 import heroVideo from '../../assets/herosection.mp4'
 
 const HeroSection = ({ onEnquiryOpen }) => {
-  const navigate = useNavigate()
+  const openPropertiesMenu = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-properties-menu'))
+    }
+  }
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -106,7 +109,7 @@ const HeroSection = ({ onEnquiryOpen }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-ghost"
-              onClick={() => navigate('/properties')}
+              onClick={openPropertiesMenu}
             >
               View Properties
             </motion.button>

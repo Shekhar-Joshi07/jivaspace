@@ -1,7 +1,4 @@
 import clientImage2 from '../assets/clients_assets/image.png'
-import amenityPool from '../assets/amenities/amenity-pool.svg'
-import amenityKids from '../assets/amenities/amenity-kids.svg'
-import amenityGym from '../assets/amenities/amenity-gym.svg'
 import amenityClubhouse from '../assets/amenities/amenity-clubhouse.svg'
 import amenityPower from '../assets/amenities/amenity-power.svg'
 import amenitySecurity from '../assets/amenities/amenity-security.svg'
@@ -9,6 +6,7 @@ import amenityParking from '../assets/amenities/amenity-parking.svg'
 import { propertyGalleryImages } from '../data/propertyGalleryImages'
 import GalleryCarousel from '../components/property/GalleryCarousel'
 import { propertyHeroImages } from '../data/propertyHeroImages'
+import migsunLogo from '../assets/Logos/migsun.png'
 
 const MigsunCentral = () => {
   const openEnquiry = () => {
@@ -16,6 +14,43 @@ const MigsunCentral = () => {
       window.dispatchEvent(new CustomEvent('open-enquiry'))
     }
   }
+  const units = [
+    { title: 'Retail Shops', area: 'Area: 300 - 800 sq.ft', price: 'Price: On Request' },
+    { title: 'Office Spaces', area: 'Area: 500 - 1200 sq.ft', price: 'Price: On Request' },
+  ]
+  const amenityIconMap = {
+    'Power Backup': amenityPower,
+    'Escalators & Lifts': amenityPower,
+    'CCTV Security': amenitySecurity,
+    '24x7 Security': amenitySecurity,
+    'Ample Parking': amenityParking,
+    'Food Court': amenityClubhouse,
+    'High Footfall Location': amenityClubhouse,
+  }
+  const amenityList = [
+    'Escalators & Lifts',
+    'Power Backup',
+    'CCTV Security',
+    'Ample Parking',
+    'Food Court',
+    'High Footfall Location',
+    '24x7 Security',
+  ]
+  const highlights = [
+    'Prime Commercial Hub',
+    'Retail & Office Spaces',
+    'High Footfall Location',
+    'Modern Infrastructure Design',
+  ]
+  const amenities = amenityList.map((label) => ({
+    label,
+    icon: amenityIconMap[label] || null,
+  }))
+  const fallbackAmenityIcon = (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+      <path d="M12 2.5l2.4 4.8 5.3.8-3.8 3.7.9 5.3L12 14.7l-4.8 2.4.9-5.3-3.8-3.7 5.3-.8L12 2.5z" />
+    </svg>
+  )
   const galleryImages = propertyGalleryImages['migsun-central']?.length
     ? propertyGalleryImages['migsun-central']
     : [clientImage2, clientImage2, clientImage2, clientImage2, clientImage2, clientImage2]
@@ -26,37 +61,32 @@ const MigsunCentral = () => {
         <div className="overflow-hidden rounded-3xl bg-neutral-100 shadow-2xl lg:h-[460px]">
           <div className="grid lg:h-full lg:grid-cols-[1.1fr_1.4fr]">
             <div className="bg-[#f4efe6] p-6 sm:p-8 lg:h-full">
-              <div className="text-xs font-semibold uppercase tracking-wider text-dark-500">
-                Project RERA No.: UP RERA PRJ 2629
-              </div>
-              <div className="text-xs text-dark-500">www.up-rera.in</div>
-
               <div className="mt-4 flex items-center gap-5">
                 <div className="text-3xl sm:text-4xl font-display font-bold text-primary-600">
                   MIGSUN
                 </div>
                 <span className="h-10 w-px bg-neutral-300" />
                 <div className="text-2xl sm:text-3xl font-display font-semibold text-dark-500">
-                  CENTRAL
+                  LUCKNOW CENTRAL
                 </div>
               </div>
 
               <div className="mt-6 space-y-2">
                 <h1 className="text-4xl sm:text-5xl font-display font-bold text-dark-500">
-                  2BHK &amp; 3BHK
+                  Retail Shops &amp; Office Spaces
                 </h1>
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#0c8b4c]">
-                  PREMIUM FLATS
+                  COMMERCIAL
                 </h2>
               </div>
 
               <div className="mt-6 inline-block rounded-2xl bg-gradient-to-r from-[#0c8b4c] to-[#0a6c8b] px-6 py-3 text-white shadow-lg">
                 <p className="text-lg font-semibold">Start From</p>
-                <p className="text-3xl font-bold">&#8377; 42.30 Lacs*</p>
+                <p className="text-3xl font-bold">&#8377; 45 - 55 Lacs*</p>
               </div>
 
               <p className="mt-6 text-base font-semibold text-dark-500">
-                Location: Sultanpur Road, Lucknow
+                Location: Shaheed Path, Near Lulu Mall, Lucknow
               </p>
             </div>
 
@@ -64,7 +94,7 @@ const MigsunCentral = () => {
               <div className="h-full w-full min-h-0 overflow-hidden rounded-[28px] border-[3px] border-primary-500/60 shadow-xl">
                 <img
                   src={heroImage}
-                  alt="Migsun Central elevation"
+                  alt="Migsun Lucknow Central elevation"
                   className="h-full w-full object-cover object-center"
                   loading="lazy"
                 />
@@ -73,20 +103,28 @@ const MigsunCentral = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-display font-semibold text-dark-500">
-                  Excella Kutumb
-                </h2>
+                <div className="flex flex-wrap items-center gap-4">
+                  <img
+                    src={migsunLogo}
+                    alt="Migsun Lucknow Central logo"
+                    className="h-12 w-auto object-contain"
+                    loading="lazy"
+                  />
+                  <h2 className="text-2xl sm:text-3xl font-display font-semibold text-dark-500">
+                    Migsun Lucknow Central
+                  </h2>
+                </div>
                 <div className="mt-2 flex items-center gap-2 text-sm text-dark-500">
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-dark-500">
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                       <path d="M12 2.5c-4.1 0-7.5 3.1-7.5 7 0 5.2 6.6 11.7 7.1 12.2.2.2.6.2.8 0 .5-.5 7.1-7 7.1-12.2 0-3.9-3.4-7-7.5-7zm0 9.7c-1.6 0-2.9-1.2-2.9-2.7S10.4 6.8 12 6.8s2.9 1.2 2.9 2.7S13.6 12.2 12 12.2z" />
                     </svg>
                   </span>
-                  Sultanpur Road, Lucknow
+                  Shaheed Path, Near Lulu Mall, Lucknow
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -104,18 +142,16 @@ const MigsunCentral = () => {
 
             <h3 className="text-xl font-semibold text-dark-500 mb-4">Description</h3>
             <p className="text-sm sm:text-base text-dark-500 leading-relaxed">
-              The Excella Group is an emerging real estate organization with a singular vision: to provide luxurious
-              homes for the common man. We offer affordable apartments, flats, and properties for sale in various
-              regions of Lucknow. Our commitment to delivering the best results in terms of plots, locations, and
-              rates sets us apart. If you are looking to buy property in Lucknow, we have the solution. Our 2 BHK and
-              3 BHK flats come with modern facilities and amenities, ensuring a comfortable and upscale living
-              experience.
+              Migsun Lucknow Central is a premium commercial development offering retail shops and office spaces in a
+              prime business location. Designed with modern architecture and high footfall potential, it provides
+              excellent opportunities for investors and entrepreneurs. With superior connectivity and contemporary
+              infrastructure, Migsun Lucknow Central is set to become a thriving commercial hub in Lucknow.
             </p>
 
             <div className="mt-6">
               <p className="text-sm font-semibold text-dark-500">Highlights:</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {['Living and Dining Room', 'External Finish', 'Balconies'].map((item) => (
+                {highlights.map((item) => (
                   <div key={item} className="flex items-center gap-3 text-sm text-dark-500">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-primary-600">
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
@@ -129,14 +165,28 @@ const MigsunCentral = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
-            <h3 className="text-2xl font-display font-semibold text-dark-500">Excella Kutumb</h3>
+          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl lg:self-start">
+            <div className="flex flex-wrap items-center gap-4">
+              <img
+                src={migsunLogo}
+                alt="Migsun Lucknow Central logo"
+                className="h-12 w-auto object-contain"
+                loading="lazy"
+              />
+              <h3 className="text-2xl font-display font-semibold text-dark-500">Migsun Lucknow Central</h3>
+            </div>
             <div className="mt-4 space-y-2 text-sm text-dark-500">
               <p><span className="font-semibold text-dark-500">Call Us :</span> +91-8090083488</p>
-              <p><span className="font-semibold text-dark-500">Email :</span> xpertedgerealtors@gmail.com</p>
+              <p><span className="font-semibold text-dark-500">Email :</span> info@jivaspace.com</p>
             </div>
 
-            <form className="mt-8 space-y-6">
+            <form
+              className="mt-8 space-y-6"
+              onSubmit={(event) => {
+                event.preventDefault()
+                openEnquiry()
+              }}
+            >
               <div>
                 <label className="block text-sm text-dark-500 mb-2">Your Name</label>
                 <input type="text" className="input-field" placeholder="Enter your name" />
@@ -154,13 +204,10 @@ const MigsunCentral = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
             <div className="grid gap-6 md:grid-cols-2">
-              {[
-                { title: '2BHK', area: 'Area: 900 sq.ft', price: 'Price: ₹ 42.50 Lac Onwards' },
-                { title: '3BHK', area: 'Area: 1080 sq.ft', price: 'Price: On Request' },
-              ].map((unit) => (
+              {units.map((unit) => (
                 <div
                   key={unit.title}
                   className="rounded-2xl bg-[#0f2f52] p-6 text-white shadow-lg"
@@ -179,20 +226,18 @@ const MigsunCentral = () => {
               Our Amenities
             </h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-              {[
-                { label: 'Swimming Pool', icon: amenityPool },
-                { label: 'Children Play Area', icon: amenityKids },
-                { label: 'Gym Area', icon: amenityGym },
-                { label: 'Club House', icon: amenityClubhouse },
-                { label: 'Power Backup', icon: amenityPower },
-                { label: 'CCTV Camera', icon: amenitySecurity },
-                { label: 'Car Parking', icon: amenityParking },
-              ].map((amenity) => (
+              {amenities.map((amenity) => (
                 <div
                   key={amenity.label}
                   className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-5 text-center text-sm font-semibold text-dark-500 shadow-sm"
                 >
-                  <img src={amenity.icon} alt="" className="h-8 w-8 opacity-80" aria-hidden="true" />
+                  {amenity.icon ? (
+                    <img src={amenity.icon} alt="" className="h-8 w-8 opacity-80" aria-hidden="true" />
+                  ) : (
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-primary-600">
+                      {fallbackAmenityIcon}
+                    </span>
+                  )}
                   <span>{amenity.label}</span>
                 </div>
               ))}
@@ -225,9 +270,9 @@ const MigsunCentral = () => {
             <h3 className="text-lg font-semibold text-dark-500">Floor Plans</h3>
             <div className="mt-4 space-y-3">
               {[
-                'Floor Plan 2BHK (900 sq.ft)',
-                'Floor Plan 3BHK (1080 sq.ft)',
-                'Master Plans',
+                'Retail Shop Plan (300 - 800 sq.ft)',
+                'Office Space Plan (500 - 1200 sq.ft)',
+                'Master Plan',
               ].map((item) => (
                 <button
                   key={item}
@@ -251,12 +296,12 @@ const MigsunCentral = () => {
           </h3>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {[
-              'IT City',
+              'Shaheed Path',
+              'Lulu Mall',
               'Medanta Hospital',
-              'Phoenix Palassio Mall',
-              'International Cricket Stadium',
-              'Sahara Hospital',
-              'Lucknow Railway Station',
+              'Ekana Stadium',
+              'IT City',
+              'Airport',
             ].map((place) => (
               <div
                 key={place}

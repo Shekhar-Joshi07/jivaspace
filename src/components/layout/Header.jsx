@@ -20,6 +20,17 @@ const Header = ({ onEnquiryOpen }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    const handleOpen = () => {
+      if (window.matchMedia('(max-width: 1023px)').matches) {
+        setIsMobileMenuOpen(true)
+      }
+    }
+    window.addEventListener('open-properties-menu', handleOpen)
+    return () => window.removeEventListener('open-properties-menu', handleOpen)
+  }, [])
+
   return (
     <>
       <motion.header

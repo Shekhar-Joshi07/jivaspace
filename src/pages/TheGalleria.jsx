@@ -19,11 +19,6 @@ const TheGalleria = () => {
         <div className="overflow-hidden rounded-3xl bg-neutral-100 shadow-2xl lg:h-[460px]">
           <div className="grid lg:h-full lg:grid-cols-[1.1fr_1.4fr]">
             <div className="bg-[#f4efe6] p-6 sm:p-8 lg:h-full">
-              <div className="text-xs font-semibold uppercase tracking-wider text-dark-500">
-                Project RERA No.: UP RERA PRJ 2629
-              </div>
-              <div className="text-xs text-dark-500">www.up-rera.in</div>
-
               <div className="mt-4 flex items-center gap-5">
                 <div className="text-3xl sm:text-4xl font-display font-bold text-primary-600">
                   THE
@@ -66,7 +61,7 @@ const TheGalleria = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div>
@@ -122,14 +117,20 @@ const TheGalleria = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl lg:self-start">
             <h3 className="text-2xl font-display font-semibold text-dark-500">The Galleria</h3>
             <div className="mt-4 space-y-2 text-sm text-dark-500">
               <p><span className="font-semibold text-dark-500">Call Us :</span> +91-8090083488</p>
-              <p><span className="font-semibold text-dark-500">Email :</span> xpertedgerealtors@gmail.com</p>
+              <p><span className="font-semibold text-dark-500">Email :</span> info@jivaspace.com</p>
             </div>
 
-            <form className="mt-8 space-y-6">
+            <form
+              className="mt-8 space-y-6"
+              onSubmit={(event) => {
+                event.preventDefault()
+                openEnquiry()
+              }}
+            >
               <div>
                 <label className="block text-sm text-dark-500 mb-2">Your Name</label>
                 <input type="text" className="input-field" placeholder="Enter your name" />
@@ -147,7 +148,7 @@ const TheGalleria = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr]">
+        <div className="mt-12 grid gap-8 lg:grid-cols-[2fr_1fr] lg:items-start">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-xl">
             <div className="grid gap-6 md:grid-cols-2">
               {[

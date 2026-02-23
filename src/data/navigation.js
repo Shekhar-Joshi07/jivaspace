@@ -3,7 +3,8 @@ export const mainNavItems = [
   { label: 'About', href: '/about' },
   { label: 'Amenities', href: '/amenities' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'Contact', href: '/contact' },
+  
+  { label: 'Contact ', href: '' },
 ]
 
 export const propertyCategories = [

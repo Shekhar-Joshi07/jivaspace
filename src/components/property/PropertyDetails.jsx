@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 
 const PropertyDetails = () => {
-  const navigate = useNavigate()
+  const openEnquiry = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-enquiry'))
+    }
+  }
 
   return (
     <section
@@ -54,7 +57,7 @@ const PropertyDetails = () => {
             <p className="text-2xl font-bold text-neutral-900 mb-6">{spec.price}</p>
             <motion.button
               type="button"
-              onClick={() => navigate('/contact')}
+              onClick={openEnquiry}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary w-full text-center block"

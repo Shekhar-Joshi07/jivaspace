@@ -1,6 +1,54 @@
-const builders = ['Migsun', 'Okas Residency', 'Oro', 'Rishita', 'Sahu City', 'Sapphire']
+import { useEffect, useMemo, useState } from 'react'
+
+const logoModules = import.meta.glob('../../assets/Logos/*.{png,jpg,jpeg,svg}', {
+  eager: true,
+  import: 'default',
+})
+
+const logos = Object.entries(logoModules)
+  .map(([path, src]) => {
+    const fileName = path.split('/').pop() || ''
+    const label = fileName
+      .replace(/\.[^.]+$/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+    return { src, label, fileName }
+  })
+  .sort((a, b) => a.fileName.localeCompare(b.fileName))
 
 const PartneredBuilders = () => {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  const slides = useMemo(() => {
+    const perSlide = 8
+    const chunks = []
+    for (let i = 0; i < logos.length; i += perSlide) {
+      chunks.push(logos.slice(i, i + perSlide))
+    }
+    return chunks
+  }, [])
+
+  const slideCount = slides.length
+
+  useEffect(() => {
+    if (slideCount <= 1 || isPaused) return undefined
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slideCount)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [slideCount, isPaused])
+
+  const openEnquiry = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-enquiry'))
+    }
+  }
+
+  const goToSlide = (index) => {
+    setActiveSlide((index + slideCount) % slideCount)
+  }
+
   return (
     <section className="section-spacing bg-white">
       <div className="section-container">
@@ -10,19 +58,75 @@ const PartneredBuilders = () => {
           </h2>
         </div>
 
-        <div className="relative overflow-hidden">
-          <div className="builder-marquee flex gap-6">
-            {[...builders, ...builders].map((builder, index) => (
-              <div
-                key={`${builder}-${index}`}
-                className="group flex min-w-[220px] items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50/60 px-6 py-8 shadow-sm transition-transform duration-300 hover:-translate-y-1"
-              >
-                <span className="text-base font-semibold text-dark-600/40 transition-all duration-300 group-hover:text-dark-700 group-hover:opacity-100 group-hover:scale-105">
-                  {builder}
-                </span>
-              </div>
-            ))}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-700 ease-out"
+              style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            >
+              {slides.map((slide, slideIndex) => (
+                <div key={`slide-${slideIndex}`} className="min-w-full px-2 sm:px-6">
+                  <div className="grid grid-cols-2 gap-x-10 gap-y-8 place-items-center sm:grid-cols-3 lg:grid-cols-4">
+                    {slide.map((logo) => (
+                      <div
+                        key={logo.fileName}
+                        className="flex h-24 w-48 items-center justify-center sm:h-28 sm:w-56"
+                      >
+                        <img
+                          src={logo.src}
+                          alt={logo.label}
+                          className="h-full w-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {slideCount > 1 ? (
+            <>
+              <button
+                type="button"
+                aria-label="Previous logos"
+                onClick={() => goToSlide(activeSlide - 1)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-2 shadow-md transition hover:bg-white"
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5 text-dark-700" fill="currentColor" aria-hidden="true">
+                  <path d="M15.4 5.4a1 1 0 010 1.4L10.2 12l5.2 5.2a1 1 0 11-1.4 1.4l-5.9-5.9a1 1 0 010-1.4l5.9-5.9a1 1 0 011.4 0z" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="Next logos"
+                onClick={() => goToSlide(activeSlide + 1)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-2 shadow-md transition hover:bg-white"
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5 text-dark-700" fill="currentColor" aria-hidden="true">
+                  <path d="M8.6 18.6a1 1 0 010-1.4l5.2-5.2-5.2-5.2a1 1 0 111.4-1.4l5.9 5.9a1 1 0 010 1.4l-5.9 5.9a1 1 0 01-1.4 0z" />
+                </svg>
+              </button>
+              <div className="mt-6 flex items-center justify-center gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={`dot-${index}`}
+                    type="button"
+                    aria-label={`Go to logos slide ${index + 1}`}
+                    onClick={() => goToSlide(index)}
+                    className={`h-2.5 w-2.5 rounded-full transition ${
+                      index === activeSlide ? 'bg-primary-600' : 'bg-neutral-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
 
         <div className="mt-12 rounded-3xl bg-neutral-200/80 px-6 py-8 sm:px-10 sm:py-10">
@@ -30,24 +134,16 @@ const PartneredBuilders = () => {
             <p className="text-base sm:text-lg text-dark-700">
               Are you searching for a house or a buyer for your property sale?
             </p>
-            <a href="#contact" className="btn-secondary min-w-[180px] text-center">
+            <button
+              type="button"
+              onClick={openEnquiry}
+              className="btn-secondary min-w-[180px] text-center"
+            >
               Enquire Now
-            </a>
+            </button>
           </div>
         </div>
       </div>
-      <style>{`
-        .builder-marquee {
-          animation: builder-scroll 18s linear infinite;
-        }
-        .builder-marquee:hover {
-          animation-play-state: paused;
-        }
-        @keyframes builder-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
     </section>
   )
 }

@@ -28,6 +28,17 @@ const Navigation = ({ onEnquiryOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    const handleOpen = () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        openDropdown()
+      }
+    }
+    window.addEventListener('open-properties-menu', handleOpen)
+    return () => window.removeEventListener('open-properties-menu', handleOpen)
+  }, [])
+
   const closeDropdown = () => {
     setIsDropdownOpen(false)
     setActiveCategory(null)
