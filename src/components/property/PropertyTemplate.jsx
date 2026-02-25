@@ -117,7 +117,7 @@ const defaultContact = {
   phone: '+91-8090083488',
   email: 'info@jivaspace.com',
   address: '',
-  projectRera: 'UPRERAPRJ2629 (PH-1)',
+  projectRera: '',
 }
 
 const toUpper = (value) => (value ? value.toUpperCase() : '')
