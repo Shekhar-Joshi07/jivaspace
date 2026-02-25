@@ -116,7 +116,7 @@ const defaultContact = {
   name: '',
   phone: '+91-8090083488',
   email: 'info@jivaspace.com',
-  address: 'Xpert Edge Realtors, 308 Royal Plaza, Sushant Golf City, Lucknow',
+  address: '',
   projectRera: 'UPRERAPRJ2629 (PH-1)',
 }
 
