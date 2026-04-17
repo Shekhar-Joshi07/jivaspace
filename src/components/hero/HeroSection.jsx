@@ -10,7 +10,6 @@ const HeroSection = ({ onEnquiryOpen }) => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated background */}
       <div className="absolute inset-0">
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -21,35 +20,8 @@ const HeroSection = ({ onEnquiryOpen }) => {
           playsInline
           preload="auto"
         />
-        <div className="absolute inset-0 bg-dark-50/70" />
-        <div className="absolute inset-0 gradient-primary opacity-20" />
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -top-1/2 -left-1/4 w-96 h-96 bg-accent-purple/30 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -bottom-1/2 -right-1/4 w-96 h-96 bg-accent-cyan/30 rounded-full blur-3xl"
-        />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -62,7 +34,7 @@ const HeroSection = ({ onEnquiryOpen }) => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6"
           >
-            <span className="px-6 py-2 bg-gradient-to-r from-primary-500/20 to-accent-purple/20 border border-primary-500/30 rounded-full text-white font-medium text-sm backdrop-blur-sm">
+            <span className="rounded-full border border-white/35 bg-black/15 px-6 py-2 text-sm font-medium text-white backdrop-blur-sm">
               Premium Real Estate in Lucknow
             </span>
           </motion.div>
@@ -71,20 +43,22 @@ const HeroSection = ({ onEnquiryOpen }) => {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-8 leading-tight"
+            className="mb-8 text-5xl font-display font-bold leading-tight sm:text-6xl md:text-7xl lg:text-8xl"
+            style={{ textShadow: '0 10px 30px rgba(0, 0, 0, 0.32)' }}
           >
             <span className="bg-gradient-to-r from-primary-500 via-accent-purple to-accent-cyan bg-clip-text text-transparent">
               Luxury Living
             </span>
             <br />
-            <span className="text-dark-900">Redefined</span>
+            <span className="text-white">Redefined</span>
           </motion.h1>
           
           <motion.p
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto leading-relaxed"
+            className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-white md:text-2xl"
+            style={{ textShadow: '0 8px 24px rgba(0, 0, 0, 0.28)' }}
           >
             Experience world-class amenities and modern architecture with JivaSpace. Your dream home awaits in the heart of Lucknow.
           </motion.p>
@@ -115,25 +89,6 @@ const HeroSection = ({ onEnquiryOpen }) => {
             </motion.button>
           </motion.div>
         </motion.div>
-
-        {/* Scroll indicator */}
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }}
-          transition={{ 
-            opacity: { delay: 1.5 },
-            y: { duration: 2, repeat: Infinity }
-          }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-dark-300 rounded-full flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-primary-500 rounded-full"
-            />
-          </div>
-        </motion.div> */}
       </div>
     </section>
   )

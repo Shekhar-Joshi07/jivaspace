@@ -12,8 +12,8 @@ const propertyImages = [
 
 const Properties = () => {
   return (
-    <div>
-      <section id="properties" className="relative section-spacing">
+    <div className="bg-neutral-100">
+      <section id="properties" className="relative section-spacing bg-neutral-100">
         <div className="section-container">
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -35,7 +35,7 @@ const Properties = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1 + index * 0.1 }}
-                className="group relative overflow-visible rounded-3xl border border-primary-200/30 bg-neutral-50/80 shadow-xl"
+                className="group relative overflow-visible rounded-3xl border border-primary-200/40 bg-white/90 shadow-xl"
               >
                 <div className="relative -mt-6 px-6">
                   <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-dark-50 shadow-xl">

@@ -1,0 +1,20 @@
+<svg width="1120" height="260" viewBox="0 0 1120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#F37A00" stroke="#F37A00" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M168 28L255 104H225V196H112V104H82L168 28Z" stroke="none" />
+    <path d="M112 104L168 56L224 104V183H112V104Z" fill="none" stroke-width="7" />
+    <path d="M97 56H118V88H97V56Z" stroke="none" />
+    <path d="M146 123H191V168H146V123Z" fill="none" stroke-width="7" />
+    <path d="M168.5 123V168" stroke-width="7" />
+    <path d="M146 145.5H191" stroke-width="7" />
+    <path d="M35 156C54 116 103 91 158 90C120 98 87 114 66 143C50 166 44 189 48 207C36 193 29 176 35 156Z" stroke="none" />
+    <path d="M35 156C54 116 103 91 158 90C217 89 273 116 314 158" fill="none" stroke-width="11" />
+    <path d="M47 172C68 129 120 106 179 106C224 106 266 122 301 150" fill="none" stroke-width="8" />
+    <path d="M19 176C32 200 60 217 98 225C69 228 41 222 20 199C12 190 8 180 9 170C10 172 14 174 19 176Z" stroke="none" />
+    <path d="M188 202C223 216 263 204 297 143C291 186 271 225 222 238C183 249 145 240 112 220C137 225 162 220 188 202Z" stroke="none" />
+    <path d="M262 30L272 52L295 61L272 70L262 92L252 70L229 61L252 52L262 30Z" stroke="none" />
+    <path d="M222 76C266 69 308 82 336 112" fill="none" stroke-width="10" />
+    <path d="M236 93C274 90 308 102 332 124" fill="none" stroke-width="7" />
+  </g>
+  <text x="372" y="173" fill="#F37A00" font-family="Sora, Poppins, Montserrat, Arial, sans-serif" font-size="66" font-weight="800">Jiva Space Realty</text>
+  <text x="374" y="213" fill="#F37A00" font-family="Inter, Poppins, Arial, sans-serif" font-size="23" font-weight="500">Where your home journey begins</text>
+</svg>

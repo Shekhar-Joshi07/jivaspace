@@ -1,0 +1,21 @@
+<svg width="540" height="540" viewBox="0 0 540 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="540" height="540" fill="#F37A00"/>
+  <g fill="#FFF8F2" stroke="#FFF8F2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M260 54L356 136H323V248H198V136H165L260 54Z" stroke="none"/>
+    <path d="M198 136L260 82L322 136V233H198V136Z" fill="none" stroke-width="8"/>
+    <path d="M182 86H206V121H182V86Z" stroke="none"/>
+    <path d="M236 160H286V210H236V160Z" fill="none" stroke-width="8"/>
+    <path d="M261 160V210" stroke-width="8"/>
+    <path d="M236 185H286" stroke-width="8"/>
+    <path d="M82 245C105 164 182 114 266 114C203 126 148 156 116 204C93 239 86 277 94 311C75 287 68 262 82 245Z" stroke="none"/>
+    <path d="M79 244C107 177 181 139 263 139C343 139 419 176 473 247" fill="none" stroke-width="17"/>
+    <path d="M95 273C124 203 201 164 285 164C348 164 406 188 454 234" fill="none" stroke-width="12"/>
+    <path d="M57 285C73 328 113 360 169 374C126 379 83 368 51 327C39 312 34 296 37 277C40 280 48 283 57 285Z" stroke="none"/>
+    <path d="M289 330C340 352 397 335 447 240C438 305 408 384 337 403C280 418 224 405 177 375C215 383 252 370 289 330Z" stroke="none"/>
+    <path d="M369 55L381 84L411 96L381 109L369 138L357 109L327 96L357 84L369 55Z" stroke="none"/>
+    <path d="M316 118C380 108 437 128 477 171" fill="none" stroke-width="14"/>
+    <path d="M338 143C390 138 437 155 470 188" fill="none" stroke-width="10"/>
+  </g>
+  <text x="270" y="436" text-anchor="middle" fill="#FFF8F2" font-family="Sora, Poppins, Montserrat, Arial, sans-serif" font-size="44" font-weight="800">Jiva Space Realty</text>
+  <text x="270" y="476" text-anchor="middle" fill="#FFF8F2" font-family="Inter, Poppins, Arial, sans-serif" font-size="22" font-weight="500">Where your home journey begins</text>
+</svg>

@@ -28,10 +28,10 @@ const Founders = () => {
         <p className="text-sm uppercase tracking-[0.3em] text-primary-400 font-semibold mb-3">
           Leadership
         </p>
-        <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+        <h2 className="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-4">
           Meet the Founders
         </h2>
-        <p className="text-lg text-white/80 max-w-2xl mx-auto">
+        <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
           Visionary leadership guiding every detail with integrity, excellence, and care.
         </p>
       </div>
@@ -44,7 +44,7 @@ const Founders = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative w-full max-w-md overflow-hidden rounded-3xl bg-dark-100/40 border border-dark-200/50 shadow-2xl"
+            className="relative w-full max-w-md overflow-hidden rounded-3xl border border-primary-200/50 bg-white shadow-2xl"
           >
             <div className="relative h-72 sm:h-80 md:h-96">
               <img
@@ -59,10 +59,10 @@ const Founders = () => {
               <p className="text-sm uppercase tracking-[0.2em] text-primary-400 mb-2">
                 {founder.title}
               </p>
-              <h3 className="text-2xl font-semibold text-white mb-3">
+              <h3 className="text-2xl font-semibold text-neutral-900 mb-3">
                 {founder.name}
               </h3>
-              <p className="text-base text-white/80 leading-relaxed">
+              <p className="text-base text-neutral-700 leading-relaxed">
                 {founder.bio}
               </p>
             </div>

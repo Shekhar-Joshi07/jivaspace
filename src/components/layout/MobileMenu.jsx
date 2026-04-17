@@ -1,10 +1,10 @@
-
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { backdropVariants, mobileMenuVariants } from '@/lib/animations'
 import { scrollToElement } from '@/lib/utils'
 import { siteConfig } from '@/data/siteConfig'
 import { mainNavItems, propertyCategories } from '@/data/navigation'
+import brandLogo from '@/assets/branding/jivaspaceupdatedlogo.png'
 
 const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
   const primaryNav = mainNavItems.slice(0, 2)
@@ -12,8 +12,8 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const handleClick = (e, href) => {
-    e.preventDefault()
+  const handleClick = (event, href) => {
+    event.preventDefault()
     if (href === '#contact' && onEnquiryOpen) {
       onClose()
       onEnquiryOpen()
@@ -40,9 +40,8 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black/50 z-50 lg:hidden"
+            className="fixed inset-0 z-50 bg-black/50 lg:hidden"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -50,31 +49,31 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
             onClick={onClose}
           />
 
-          {/* Menu Panel */}
           <motion.div
-            className="fixed top-0 right-0 bottom-0 w-80 bg-neutral-50 shadow-2xl z-50 lg:hidden overflow-y-auto"
+            className="fixed bottom-0 right-0 top-0 z-50 w-80 overflow-y-auto bg-neutral-50 shadow-2xl lg:hidden"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
             exit="hidden"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-neutral-200">
+            <div className="flex items-center justify-between border-b border-neutral-200 p-6">
               <div>
-                <h2 className="text-xl font-bold text-neutral-900">
-                  {siteConfig.company.name}
-                </h2>
-                <p className="text-sm text-neutral-600">
+                <img
+                  src={brandLogo}
+                  alt="Jiva Space Realty logo"
+                  className="h-14 w-auto rounded-xl object-contain"
+                />
+                <p className="mt-2 text-sm text-neutral-600">
                   {siteConfig.company.tagline}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg hover:bg-neutral-100 transition-colors"
+                className="rounded-lg p-2 transition-colors hover:bg-neutral-100"
                 aria-label="Close menu"
               >
                 <svg
-                  className="w-6 h-6 text-neutral-900"
+                  className="h-6 w-6 text-neutral-900"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -89,7 +88,6 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
               </button>
             </div>
 
-            {/* Navigation Links */}
             <nav className="p-6">
               <ul className="space-y-4">
                 {primaryNav.map((item, index) => (
@@ -101,8 +99,8 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
                   >
                     <a
                       href={item.href}
-                      onClick={(e) => handleClick(e, item.href)}
-                      className="block px-4 py-3 text-lg font-medium text-neutral-700 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"
+                      onClick={(event) => handleClick(event, item.href)}
+                      className="block rounded-lg px-4 py-3 text-lg font-medium text-neutral-700 transition-all hover:bg-primary-50 hover:text-primary-500"
                     >
                       {item.label}
                     </a>
@@ -117,26 +115,26 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
                   className="rounded-lg border border-neutral-200 bg-white/70"
                 >
                   <details className="group">
-                    <summary className="list-none cursor-pointer px-4 py-3 text-lg font-medium text-neutral-800 flex items-center justify-between">
+                    <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-lg font-medium text-neutral-800">
                       <span>Properties+</span>
-                      <span className="text-neutral-500 group-open:rotate-90 transition-transform">&gt;</span>
+                      <span className="text-neutral-500 transition-transform group-open:rotate-90">&gt;</span>
                     </summary>
                     <div className="px-4 pb-4">
                       <div className="space-y-4">
                         {propertyCategories.map((category) =>
                           category.items.length ? (
                             <details key={category.label} className="group">
-                              <summary className="list-none cursor-pointer text-sm font-semibold uppercase tracking-wide text-neutral-600 flex items-center justify-between py-2">
+                              <summary className="flex list-none cursor-pointer items-center justify-between py-2 text-sm font-semibold uppercase tracking-wide text-neutral-600">
                                 <span>{category.label}</span>
-                                <span className="text-neutral-400 group-open:rotate-90 transition-transform">&gt;</span>
+                                <span className="text-neutral-400 transition-transform group-open:rotate-90">&gt;</span>
                               </summary>
-                              <ul className="pl-3 space-y-2">
+                              <ul className="space-y-2 pl-3">
                                 {category.items.map((item) => (
                                   <li key={item.label}>
                                     <a
                                       href={item.href}
-                                      onClick={(e) => handleClick(e, item.href)}
-                                      className="block text-sm font-medium text-neutral-700 hover:text-primary-500 transition-colors"
+                                      onClick={(event) => handleClick(event, item.href)}
+                                      className="block text-sm font-medium text-neutral-700 transition-colors hover:text-primary-500"
                                     >
                                       {item.label}
                                     </a>
@@ -147,11 +145,11 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
                           ) : (
                             <div
                               key={category.label}
-                              className="text-sm font-semibold uppercase tracking-wide text-neutral-600 py-2"
+                              className="py-2 text-sm font-semibold uppercase tracking-wide text-neutral-600"
                             >
                               {category.label}
                             </div>
-                          )
+                          ),
                         )}
                       </div>
                     </div>
@@ -167,8 +165,8 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
                   >
                     <a
                       href={item.href}
-                      onClick={(e) => handleClick(e, item.href)}
-                      className="block px-4 py-3 text-lg font-medium text-neutral-700 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"
+                      onClick={(event) => handleClick(event, item.href)}
+                      className="block rounded-lg px-4 py-3 text-lg font-medium text-neutral-700 transition-all hover:bg-primary-50 hover:text-primary-500"
                     >
                       {item.label}
                     </a>
@@ -177,18 +175,17 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
               </ul>
             </nav>
 
-            {/* Contact Info */}
-            <div className="p-6 border-t border-neutral-200 bg-neutral-50">
-              <h3 className="text-sm font-semibold text-neutral-900 mb-4">
+            <div className="border-t border-neutral-200 bg-neutral-50 p-6">
+              <h3 className="mb-4 text-sm font-semibold text-neutral-900">
                 Contact Us
               </h3>
               <div className="space-y-3">
                 <a
                   href={`tel:${siteConfig.contact.phone}`}
-                  className="flex items-center space-x-3 text-neutral-700 hover:text-primary-500 transition-colors"
+                  className="flex items-center space-x-3 text-neutral-700 transition-colors hover:text-primary-500"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -204,10 +201,10 @@ const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
                 </a>
                 <a
                   href={`mailto:${siteConfig.contact.email}`}
-                  className="flex items-center space-x-3 text-neutral-700 hover:text-primary-500 transition-colors"
+                  className="flex items-center space-x-3 text-neutral-700 transition-colors hover:text-primary-500"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

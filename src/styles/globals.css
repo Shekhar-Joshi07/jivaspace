@@ -9,7 +9,10 @@
 
   body {
     @apply bg-dark-50 text-dark-900 antialiased;
-    background: linear-gradient(135deg, #0b1226 0%, #0f1a34 50%, #131f3d 100%);
+    background:
+      radial-gradient(circle at top left, rgba(255, 214, 164, 0.16) 0%, transparent 28%),
+      radial-gradient(circle at bottom right, rgba(255, 244, 231, 0.18) 0%, transparent 24%),
+      linear-gradient(140deg, #6b2504 0%, #8e3a04 42%, #dd6500 100%);
     min-height: 100vh;
   }
 
@@ -22,20 +25,20 @@
   .btn-primary {
     @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white px-8 py-3 rounded-xl font-semibold
            hover:from-primary-500 hover:to-primary-600 transition-all duration-300
-           shadow-lg shadow-primary-500/50 hover:shadow-xl hover:shadow-primary-500/70 active:scale-95
+           shadow-lg shadow-primary-500/35 hover:shadow-xl hover:shadow-primary-500/45 active:scale-95
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
 
   .btn-secondary {
-    @apply bg-dark-100 text-dark-900 border border-dark-200 px-8 py-3 rounded-xl font-semibold
-           hover:bg-dark-200 hover:border-dark-300 transition-all duration-300
+    @apply bg-white/95 text-primary-700 border border-primary-200 px-8 py-3 rounded-xl font-semibold
+           hover:bg-primary-50 hover:border-primary-300 transition-all duration-300
            shadow-md hover:shadow-lg active:scale-95
            focus:outline-none focus:ring-2 focus:ring-dark-300 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
 
   .btn-ghost {
-    @apply bg-dark-100/50 backdrop-blur-sm text-dark-900 border border-dark-200/50 px-8 py-3 rounded-xl font-semibold
-           hover:bg-dark-100 hover:border-dark-200 transition-all duration-300
+    @apply bg-white/10 backdrop-blur-sm text-dark-900 border border-white/25 px-8 py-3 rounded-xl font-semibold
+           hover:bg-white/15 hover:border-white/35 transition-all duration-300
            active:scale-95
            focus:outline-none focus:ring-2 focus:ring-dark-300 focus:ring-offset-2 focus:ring-offset-dark-50;
   }
@@ -53,7 +56,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-xl border border-primary-200/40 bg-white
+    @apply w-full px-4 py-3 rounded-xl border border-primary-200/60 bg-white/95
            text-neutral-900 placeholder-neutral-500
            focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20
            transition-all duration-200 outline-none;
@@ -64,15 +67,18 @@
   }
 
   .gradient-primary {
-    background: linear-gradient(135deg, #c9a24a 0%, #8e6b22 100%);
+    background: linear-gradient(135deg, #ffb25a 0%, #f37a00 48%, #b94f00 100%);
   }
 
   .gradient-accent {
-    background: linear-gradient(135deg, #e4cf9a 0%, #c9a24a 50%, #8e6b22 100%);
+    background: linear-gradient(135deg, #fff1de 0%, #ffd29b 45%, #ff8e22 100%);
   }
 
   .glass-effect {
-    @apply bg-dark-100/30 backdrop-blur-xl border border-dark-200/50;
+    @apply backdrop-blur-xl border;
+    background-color: rgba(255, 247, 239, 0.84);
+    border-color: rgba(255, 204, 138, 0.45);
+    box-shadow: 0 18px 45px -28px rgba(221, 101, 0, 0.45);
   }
 }
 
@@ -102,18 +108,21 @@
 }
 
 .enquiry-form {
-  background-color: #15172b;
+  background:
+    radial-gradient(circle at top right, rgba(255, 214, 164, 0.18), transparent 34%),
+    linear-gradient(180deg, #7b2d07 0%, #6b2504 100%);
   border-radius: 20px;
   box-sizing: border-box;
   padding: 20px 22px;
   width: min(340px, 92vw);
-  color: #eee;
-  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.65);
+  color: #fff7ef;
+  box-shadow: 0 24px 50px -30px rgba(88, 29, 0, 0.72);
   position: relative;
+  border: 1px solid rgba(255, 214, 164, 0.18);
 }
 
 .enquiry-form .title {
-  color: #eee;
+  color: #fff7ef;
   font-family: 'Sora', sans-serif;
   font-size: 28px;
   font-weight: 600;
@@ -121,7 +130,7 @@
 }
 
 .enquiry-form .subtitle {
-  color: #eee;
+  color: rgba(255, 247, 239, 0.82);
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -143,11 +152,11 @@
 }
 
 .enquiry-form .input {
-  background-color: #303245;
+  background-color: rgba(255, 247, 239, 0.1);
   border-radius: 12px;
-  border: 0;
+  border: 1px solid rgba(255, 214, 164, 0.14);
   box-sizing: border-box;
-  color: #eee;
+  color: #fff7ef;
   font-size: 15px;
   height: 100%;
   outline: 0;
@@ -166,7 +175,7 @@
 }
 
 .enquiry-form .cut {
-  background-color: #15172b;
+  background-color: #742906;
   border-radius: 10px;
   height: 20px;
   left: 20px;
@@ -187,7 +196,7 @@
 }
 
 .enquiry-form .iLabel {
-  color: #65657b;
+  color: rgba(255, 214, 164, 0.65);
   font-family: 'Inter', sans-serif;
   left: 20px;
   line-height: 14px;
@@ -210,15 +219,15 @@
 }
 
 .enquiry-form .input:focus ~ .iLabel {
-  color: #dc2f55;
+  color: #ffcf97;
 }
 
 .enquiry-form .submit {
-  background-color: #08d;
+  background: linear-gradient(135deg, #ff9a1f 0%, #f37a00 50%, #d55800 100%);
   border-radius: 12px;
   border: 0;
   box-sizing: border-box;
-  color: #eee;
+  color: #fff7ef;
   cursor: pointer;
   font-size: 15px;
   height: 46px;
@@ -232,7 +241,7 @@
 }
 
 .enquiry-form .submit:active {
-  background-color: #06b;
+  background: linear-gradient(135deg, #ff8f10 0%, #dd6500 100%);
 }
 
 .enquiry-form .submit:disabled {
@@ -259,7 +268,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  color: #c9a24a;
+  color: #ffcf97;
   background: transparent;
   border: none;
   padding: 0;
@@ -267,7 +276,7 @@
 }
 
 .enquiry-form__close:hover {
-  color: #d6b26b;
+  color: #fff1de;
 }
 
 @keyframes spin {
@@ -282,13 +291,13 @@
   height: 220px;
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 16px 40px -20px rgba(11, 18, 38, 0.6);
+  box-shadow: 0 20px 46px -22px rgba(109, 40, 0, 0.48);
 }
 
 .social-card__background {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 100% 107%, #d6b26b 0%, #b8893a 35%, #1b2544 70%, #0d1225 100%);
+  background: radial-gradient(circle at 100% 107%, #ffe8c9 0%, #ffac44 34%, #d55800 66%, #7c2d07 100%);
 }
 
 .social-card__logo {
@@ -312,7 +321,7 @@
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
-  box-shadow: rgba(15, 23, 42, 0.45) -7px 7px 29px 0px;
+  box-shadow: rgba(113, 41, 0, 0.32) -7px 7px 29px 0px;
   transform-origin: bottom left;
   transition: all 0.9s ease-in-out;
 }
@@ -351,7 +360,7 @@
 }
 
 .social-card__box--1::before {
-  background: radial-gradient(circle at 30% 107%, #f3e3b4 0%, #d6b26b 55%, #b8893a 90%);
+  background: radial-gradient(circle at 30% 107%, #fff5e7 0%, #ffc06f 55%, #f37a00 90%);
 }
 
 .social-card__box--2 {
@@ -363,7 +372,7 @@
 }
 
 .social-card__box--2::before {
-  background: radial-gradient(circle at 30% 107%, #d6b26b 0%, #8e6b22 90%);
+  background: radial-gradient(circle at 30% 107%, #ffd7a6 0%, #d55800 90%);
 }
 
 .social-card__box--3 {
@@ -375,7 +384,7 @@
 }
 
 .social-card__box--3::before {
-  background: radial-gradient(circle at 30% 107%, #ead9ab 0%, #c9a24a 90%);
+  background: radial-gradient(circle at 30% 107%, #fff0dc 0%, #ff9f3d 90%);
 }
 
 .social-card__box--4 {

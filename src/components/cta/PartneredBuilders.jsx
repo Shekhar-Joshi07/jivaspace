@@ -5,6 +5,11 @@ const logoModules = import.meta.glob('../../assets/Logos/*.{png,jpg,jpeg,svg}', 
   import: 'default',
 })
 
+const excludedLogoFiles = new Set([
+  '1156e76eaf018d78e9764f72d6daa0fe.jpg',
+  'd451aa6a1bf290b3cdb0cd36d46188d0.jpg',
+])
+
 const logos = Object.entries(logoModules)
   .map(([path, src]) => {
     const fileName = path.split('/').pop() || ''
@@ -14,6 +19,7 @@ const logos = Object.entries(logoModules)
       .replace(/\b\w/g, (char) => char.toUpperCase())
     return { src, label, fileName }
   })
+  .filter((logo) => !excludedLogoFiles.has(logo.fileName))
   .sort((a, b) => a.fileName.localeCompare(b.fileName))
 
 const PartneredBuilders = () => {

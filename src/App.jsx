@@ -15,8 +15,7 @@ import PropertyPage from './pages/PropertyPage'
 import EnquiryModal from './components/forms/EnquiryModal'
 import GalleryModal from './components/gallery/GalleryModal'
 import { scrollToElement } from './lib/utils'
-import preloaderVideo from './assets/JivaSpace_Second_Render.mp4'
-import preloaderLogo from './assets/JivaSpace LOGO.jpeg'
+import preloaderLogo from './assets/branding/jivaspaceupdatedlogo.png'
 
 const ScrollToHash = () => {
   const location = useLocation()
@@ -50,7 +49,8 @@ const PropertyEnquiryAutoOpen = ({ onOpen }) => {
 
 function App() {
   const ONE_HOUR_MS = 60 * 60 * 1000
-  const MOBILE_LOADER_MS = 4000
+  const DESKTOP_LOADER_MS = 2800
+  const MOBILE_LOADER_MS = 2400
   const [loading, setLoading] = useState(() => {
     if (typeof window === 'undefined') return true
     try {
@@ -60,10 +60,8 @@ function App() {
       return true
     }
   })
-  const [videoLoaded, setVideoLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false)
-  const videoRef = useRef(null)
 
   useEffect(() => {
     try {
@@ -99,92 +97,11 @@ function App() {
   useEffect(() => {
     if (!loading) return
 
-    if (isMobile) {
-      const mobileTimer = setTimeout(() => {
-        setLoading(false)
-      }, MOBILE_LOADER_MS)
-      return () => clearTimeout(mobileTimer)
-    }
-
-    const video = videoRef.current
-    if (!video) return
-
-    // Start muted to allow autoplay
-    video.muted = true
-    const isSmallScreen = window.matchMedia('(max-width: 640px)').matches
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (isSmallScreen || prefersReducedMotion) {
-      // Lightly throttle playback on constrained devices to reduce frame drops
-      video.playbackRate = 0.9
-    }
-
-    // Try to play as soon as possible
-    const attemptPlay = () => {
-      const playPromise = video.play()
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Video playing successfully')
-            setVideoLoaded(true)
-          })
-          .catch(err => {
-            console.log('Video autoplay failed:', err)
-            setTimeout(() => setLoading(false), 1000)
-          })
-      } else {
-        setVideoLoaded(true)
-      }
-    }
-
-    const handleEnded = () => {
-      console.log('Video ended')
-      setTimeout(() => setLoading(false), 300)
-    }
-
-    const handleError = (e) => {
-      console.log('Video error:', e)
-      setTimeout(() => setLoading(false), 1000)
-    }
-
-    // Try multiple events to ensure playback starts
-    const handleLoadedMetadata = () => {
-      console.log('Video metadata loaded')
-      attemptPlay()
-    }
-
-    const handleLoadedData = () => {
-      console.log('Video data loaded')
-      // Only attempt if not already playing
-      if (video.paused) {
-        attemptPlay()
-      }
-    }
-
-    video.addEventListener('loadedmetadata', handleLoadedMetadata)
-    video.addEventListener('loadeddata', handleLoadedData)
-    video.addEventListener('ended', handleEnded)
-    video.addEventListener('error', handleError)
-
-    // Immediate attempt if video is already loaded
-    if (video.readyState >= 2) {
-      console.log('Video already loaded, playing immediately')
-      attemptPlay()
-    }
-
-    // Fallback timer
-    const fallbackTimer = setTimeout(() => {
-      console.log('Fallback timer - skipping to site')
+    const timer = setTimeout(() => {
       setLoading(false)
-    }, 10000)
+    }, isMobile ? MOBILE_LOADER_MS : DESKTOP_LOADER_MS)
 
-    return () => {
-      clearTimeout(fallbackTimer)
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata)
-      video.removeEventListener('loadeddata', handleLoadedData)
-      video.removeEventListener('ended', handleEnded)
-      video.removeEventListener('error', handleError)
-    }
+    return () => clearTimeout(timer)
   }, [loading, isMobile])
 
   return (
@@ -194,40 +111,34 @@ function App() {
           key="loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1225]"
+          transition={{ duration: 0.45 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[linear-gradient(155deg,_#ff9b24_0%,_#f37a00_45%,_#b94f00_100%)]"
         >
-          {isMobile ? (
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,248,242,0.25),_transparent_34%)]" />
+          <motion.div
+            className="relative z-10 flex flex-col items-center px-6 text-center"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: [0.92, 1.02, 1] }}
+            transition={{ duration: isMobile ? 1.8 : 2.2, ease: 'easeOut' }}
+          >
             <motion.img
               src={preloaderLogo}
-              alt="JivaSpace logo"
-              className="w-[72%] max-w-sm h-auto object-contain select-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 1, 0] }}
-              transition={{ duration: 4, times: [0, 0.2, 0.8, 1], ease: 'easeInOut' }}
+              alt="Jiva Space Realty logo"
+              className={`h-auto object-contain select-none ${isMobile ? 'w-[78%] max-w-xs' : 'w-[24rem] max-w-[78vw]'}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, ease: 'easeOut' }}
               draggable="false"
             />
-          ) : (
-            <video
-              ref={videoRef}
-              src={preloaderVideo}
-              className={`w-full h-full bg-[#0d1225] object-contain sm:object-cover object-center transition-opacity duration-300 ${
-                videoLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-            />
-          )}
-          {!videoLoaded && !isMobile && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-dark-700 font-medium">Loading...</p>
-              </div>
-            </div>
-          )}
+            <motion.p
+              className="mt-6 text-sm font-medium uppercase tracking-[0.32em] text-white/85"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
+            >
+              Where your home journey begins
+            </motion.p>
+          </motion.div>
         </motion.div>
       ) : (
         <BrowserRouter>

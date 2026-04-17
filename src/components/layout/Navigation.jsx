@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { scrollToElement } from '@/lib/utils'
 import { mainNavItems, propertyCategories } from '@/data/navigation'
 
-const Navigation = ({ onEnquiryOpen }) => {
+const Navigation = ({ onEnquiryOpen, isOverlay = false }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [submenuOffset, setSubmenuOffset] = useState(0)
@@ -60,8 +60,8 @@ const Navigation = ({ onEnquiryOpen }) => {
     setSubmenuOffset(offset)
   }
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault()
+  const handleNavClick = (event, href) => {
+    event.preventDefault()
     closeDropdown()
     if (href === '#contact' && onEnquiryOpen) {
       onEnquiryOpen()
@@ -81,8 +81,8 @@ const Navigation = ({ onEnquiryOpen }) => {
     }
   }
 
-  const handleToggleDropdown = (e) => {
-    e.preventDefault()
+  const handleToggleDropdown = (event) => {
+    event.preventDefault()
     if (isDropdownOpen) {
       closeDropdown()
     } else {
@@ -90,16 +90,20 @@ const Navigation = ({ onEnquiryOpen }) => {
     }
   }
 
+  const navItemClass = isOverlay
+    ? 'text-white/90 hover:text-white'
+    : 'text-dark-500 hover:text-dark-50'
+
   return (
     <nav>
       <ul className="flex items-center space-x-1">
         {mainNavItems.slice(0, 2).map((item) => (
           <li key={item.href}>
-            <a href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
+            <a href={item.href} onClick={(event) => handleNavClick(event, item.href)}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-4 py-2 rounded-lg font-medium transition-all duration-200 text-dark-600 hover:text-dark-900"
+                className={`relative rounded-lg px-4 py-2 font-medium transition-all duration-200 ${navItemClass}`}
               >
                 {item.label}
               </motion.div>
@@ -111,28 +115,28 @@ const Navigation = ({ onEnquiryOpen }) => {
           <button
             type="button"
             onClick={handleToggleDropdown}
-            className="relative px-4 py-2 rounded-lg font-medium transition-all duration-200 text-dark-600 hover:text-dark-900 flex items-center gap-1"
+            className={`relative flex items-center gap-1 rounded-lg px-4 py-2 font-medium transition-all duration-200 ${navItemClass}`}
             aria-haspopup="true"
             aria-expanded={isDropdownOpen}
             aria-controls="properties-menu"
           >
             <span>Properties</span>
-            <span className="text-primary-500">+</span>
+            <span className={isOverlay ? 'text-white' : 'text-primary-500'}>+</span>
           </button>
 
           <div
             id="properties-menu"
             className={`absolute left-0 top-full pt-3 transition-all duration-200 ${
               isDropdownOpen
-                ? 'opacity-100 translate-y-0 pointer-events-auto'
-                : 'opacity-0 translate-y-2 pointer-events-none'
+                ? 'pointer-events-auto translate-y-0 opacity-100'
+                : 'pointer-events-none translate-y-2 opacity-0'
             }`}
           >
             <div
               ref={menuPanelRef}
-              className="relative rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200"
+              className="relative rounded-2xl border border-primary-200/70 bg-white/95 shadow-xl backdrop-blur-xl"
             >
-              <div className="w-56 p-5 bg-[#ffffff] rounded-2xl">
+              <div className="w-56 rounded-2xl bg-white/95 p-5">
                 <ul className="space-y-4">
                   {propertyCategories.map((category) => {
                     const isActive = activeCategory?.label === category.label
@@ -140,15 +144,15 @@ const Navigation = ({ onEnquiryOpen }) => {
                       <li key={category.label}>
                         <button
                           type="button"
-                          onClick={(e) => handleCategoryHover(category, e)}
-                          onMouseEnter={(e) => handleCategoryHover(category, e)}
-                          onFocus={(e) => handleCategoryHover(category, e)}
-                          className={`w-full flex items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors ${
-                            isActive ? 'text-primary-600' : 'text-neutral-900 hover:text-neutral-900'
+                          onClick={(event) => handleCategoryHover(category, event)}
+                          onMouseEnter={(event) => handleCategoryHover(category, event)}
+                          onFocus={(event) => handleCategoryHover(category, event)}
+                          className={`flex w-full items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors ${
+                            isActive ? 'text-primary-600' : 'text-neutral-900 hover:text-primary-600'
                           }`}
                         >
                           <span>{category.label}</span>
-                          <span className={`${isActive ? 'text-primary-600' : 'text-neutral-500'}`}>&gt;</span>
+                          <span className={isActive ? 'text-primary-600' : 'text-neutral-500'}>&gt;</span>
                         </button>
                       </li>
                     )
@@ -158,7 +162,7 @@ const Navigation = ({ onEnquiryOpen }) => {
 
               {activeCategory?.items?.length ? (
                 <div
-                  className="absolute left-full top-0 ml-3 w-56 rounded-2xl bg-[#ffffff] shadow-xl border border-neutral-200"
+                  className="absolute left-full top-0 ml-3 w-56 rounded-2xl border border-primary-200/70 bg-white/95 shadow-xl backdrop-blur-xl"
                   style={{ marginTop: submenuOffset }}
                 >
                   <ul className="space-y-4 p-5">
@@ -166,8 +170,8 @@ const Navigation = ({ onEnquiryOpen }) => {
                       <li key={item.label}>
                         <a
                           href={item.href}
-                          onClick={(e) => handleNavClick(e, item.href)}
-                          className="block text-sm font-semibold text-neutral-900 uppercase tracking-wide hover:text-primary-600 transition-colors"
+                          onClick={(event) => handleNavClick(event, item.href)}
+                          className="block text-sm font-semibold uppercase tracking-wide text-neutral-900 transition-colors hover:text-primary-600"
                         >
                           {item.label}
                         </a>
@@ -182,11 +186,11 @@ const Navigation = ({ onEnquiryOpen }) => {
 
         {mainNavItems.slice(2).map((item) => (
           <li key={item.href}>
-            <a href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
+            <a href={item.href} onClick={(event) => handleNavClick(event, item.href)}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-4 py-2 rounded-lg font-medium transition-all duration-200 text-dark-600 hover:text-dark-900"
+                className={`relative rounded-lg px-4 py-2 font-medium transition-all duration-200 ${navItemClass}`}
               >
                 {item.label}
               </motion.div>
