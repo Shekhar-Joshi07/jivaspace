@@ -21,7 +21,7 @@ const Footer = () => {
   const socialLinks = [
     {
       label: 'Instagram',
-      href: siteConfig.social.instagram,
+      href: `https://www.instagram.com/jivaspacerealty?igsh=MTRuajZ5aHBzcDQzbw%3D%3D&utm_source=qr`,
       icon: (
         <svg className="social-card__svg" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 8.4a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2zm0 5.9a2.3 2.3 0 1 1 0-4.6 2.3 2.3 0 0 1 0 4.6zM16.9 6.9a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8z" />
