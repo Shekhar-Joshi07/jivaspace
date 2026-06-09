@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import founderSapna from '../assets/clients_assets/FounderI1.jpeg'
-import founderKalpana from '../assets/clients_assets/FounderI2.jpeg'
+import founderSapna from '../assets/clients_assets/FounderI2.jpeg'
+import founderKalpana from '../assets/clients_assets/FounderI1.jpeg'
 
 const founders = [
   {
