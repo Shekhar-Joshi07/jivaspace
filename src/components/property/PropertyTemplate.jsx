@@ -114,7 +114,7 @@ const defaultNearbyPlaces = [
 
 const defaultContact = {
   name: '',
-  phone: '+91-8090083488',
+  phone: '+91 73070 37497, +91 93366 06233',
   email: 'info@jivaspace.com',
   address: '',
   projectRera: '',

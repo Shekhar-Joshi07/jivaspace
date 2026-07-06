@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { siteConfig } from '@/data/siteConfig'
 
 const Contact = () => {
   return (
@@ -25,9 +26,9 @@ const Contact = () => {
             className="mt-12 grid md:grid-cols-3 gap-8"
           >
             {[
-              { icon: '📍', title: 'Location', info: 'Sushant Golf City, Lucknow' },
+              { icon: '📍', title: 'Location', info: siteConfig.contact.address },
               { icon: '📧', title: 'Email', info: 'info@jivaspace.com' },
-              { icon: '📞', title: 'Phone', info: '+91 987-654-3210' },
+              { icon: '📞', title: 'Phone', info: siteConfig.contact.phoneDisplay },
             ].map((item, index) => (
               <motion.div
                 key={item.title}

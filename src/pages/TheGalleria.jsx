@@ -120,7 +120,7 @@ const TheGalleria = () => {
           <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-xl lg:self-start">
             <h3 className="text-2xl font-display font-semibold text-dark-500">The Galleria</h3>
             <div className="mt-4 space-y-2 text-sm text-dark-500">
-              <p><span className="font-semibold text-dark-500">Call Us :</span> +91-8090083488</p>
+              <p><span className="font-semibold text-dark-500">Call Us :</span> +91 73070 37497, +91 93366 06233</p>
               <p><span className="font-semibold text-dark-500">Email :</span> info@jivaspace.com</p>
             </div>
 
@@ -200,7 +200,7 @@ const TheGalleria = () => {
                 <span className="font-semibold text-dark-500">Address :</span>  Lucknow
               </p>
               <p>
-                <span className="font-semibold text-dark-500">Call Us :</span> +91-8090083488
+                <span className="font-semibold text-dark-500">Call Us :</span> +91 73070 37497, +91 93366 06233
               </p>
               <p>
                 <span className="font-semibold text-dark-500">Project RERA :</span> 

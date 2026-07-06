@@ -10,11 +10,11 @@ export const siteConfig = {
   },
 
   contact: {
-    phone: '+91 98765 43210',
-    phoneDisplay: '+91 987-654-3210',
+    phone: '+91 73070 37497',
+    phoneDisplay: '+91 73070 37497, +91 93366 06233',
     email: 'info@jivaspace.com',
-    address: 'Office No. 123, Commercial Tower, Lucknow - 226001',
-    whatsapp: '+919876543210',
+    address: '14, Cine Grand Residency, Near Hari Om Mandir, Lalbagh, Lucknow - 226001',
+    whatsapp: '+917307037497',
   },
 
   social: {

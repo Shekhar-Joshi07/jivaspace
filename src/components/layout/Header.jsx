@@ -31,8 +31,7 @@ const Header = ({ onEnquiryOpen }) => {
     return () => window.removeEventListener('open-properties-menu', handleOpen)
   }, [])
 
-  const isHome = location.pathname === '/'
-  const isOverlay = isHome && !isScrolled
+  const useLightHeaderStyles = !isScrolled
 
   return (
     <>
@@ -72,13 +71,13 @@ const Header = ({ onEnquiryOpen }) => {
             </a>
 
             <div className="hidden lg:block">
-              <Navigation onEnquiryOpen={onEnquiryOpen} isOverlay={isOverlay} />
+              <Navigation onEnquiryOpen={onEnquiryOpen} isLightText={useLightHeaderStyles} />
             </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className={`lg:hidden rounded-xl border p-2 transition-transform hover:scale-110 ${
-                isOverlay
+                useLightHeaderStyles
                   ? 'border-white/20 bg-white/10 text-white backdrop-blur-md'
                   : 'glass-effect border-primary-200/40 text-dark-500'
               }`}

@@ -3,8 +3,9 @@ import { motion } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { scrollToElement } from '@/lib/utils'
 import { mainNavItems, propertyCategories } from '@/data/navigation'
+import { siteConfig } from '@/data/siteConfig'
 
-const Navigation = ({ onEnquiryOpen, isOverlay = false }) => {
+const Navigation = ({ onEnquiryOpen, isLightText = false }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [submenuOffset, setSubmenuOffset] = useState(0)
@@ -90,8 +91,8 @@ const Navigation = ({ onEnquiryOpen, isOverlay = false }) => {
     }
   }
 
-  const navItemClass = isOverlay
-    ? 'text-white/90 hover:text-white'
+  const navItemClass = isLightText
+    ? 'text-white hover:text-white'
     : 'text-dark-500 hover:text-dark-50'
 
   return (
@@ -121,7 +122,7 @@ const Navigation = ({ onEnquiryOpen, isOverlay = false }) => {
             aria-controls="properties-menu"
           >
             <span>Properties</span>
-            <span className={isOverlay ? 'text-white' : 'text-primary-500'}>+</span>
+            <span className={isLightText ? 'text-white' : 'text-primary-500'}>+</span>
           </button>
 
           <div
@@ -197,6 +198,18 @@ const Navigation = ({ onEnquiryOpen, isOverlay = false }) => {
             </a>
           </li>
         ))}
+
+        <li className="ml-3">
+          <a
+            href={`tel:${siteConfig.contact.phone.replace(/\D/g, '')}`}
+            className={`block rounded-lg px-4 py-3 text-sm font-semibold leading-tight transition-colors ${
+              isLightText ? 'text-white hover:text-white' : 'text-dark-500 hover:text-primary-600'
+            }`}
+          >
+            <span className="block">7307037497, 9336606233</span>
+           
+          </a>
+        </li>
       </ul>
     </nav>
   )

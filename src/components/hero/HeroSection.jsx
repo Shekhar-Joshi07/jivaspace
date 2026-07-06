@@ -57,10 +57,11 @@ const HeroSection = ({ onEnquiryOpen }) => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-white md:text-2xl"
+            className="mx-auto mb-12 inline-block max-w-4xl whitespace-pre-line rounded-lg border border-white/20 bg-black/45 px-5 py-3 text-xl leading-relaxed text-white shadow-2xl backdrop-blur-md sm:px-7 md:text-2xl"
             style={{ textShadow: '0 8px 24px rgba(0, 0, 0, 0.28)' }}
           >
-            Experience world-class amenities and modern architecture with JivaSpace. Your dream home awaits in the heart of Lucknow.
+            Leading the industry. Defining the skyline.{'\n'}
+            Building the empires of tomorrow.
           </motion.p>
 
           <motion.div
