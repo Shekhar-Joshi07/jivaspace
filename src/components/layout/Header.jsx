@@ -5,12 +5,14 @@ import Navigation from './Navigation'
 import MobileMenu from './MobileMenu'
 import brandLogo from '../../assets/branding/jivaspaceupdatedlogo.png'
 import { scrollToElement } from '@/lib/utils'
+import { useWebsiteProjectCategories } from '@/hooks/useWebsiteProjectCategories'
 
 const Header = ({ onEnquiryOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
+  const propertyCategories = useWebsiteProjectCategories()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,7 +73,7 @@ const Header = ({ onEnquiryOpen }) => {
             </a>
 
             <div className="hidden lg:block">
-              <Navigation onEnquiryOpen={onEnquiryOpen} isLightText={useLightHeaderStyles} />
+              <Navigation onEnquiryOpen={onEnquiryOpen} isLightText={useLightHeaderStyles} propertyCategories={propertyCategories} />
             </div>
 
             <button
@@ -94,6 +96,7 @@ const Header = ({ onEnquiryOpen }) => {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         onEnquiryOpen={onEnquiryOpen}
+        propertyCategories={propertyCategories}
       />
     </>
   )

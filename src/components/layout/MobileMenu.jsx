@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { backdropVariants, mobileMenuVariants } from '@/lib/animations'
 import { scrollToElement } from '@/lib/utils'
 import { siteConfig } from '@/data/siteConfig'
-import { mainNavItems, propertyCategories } from '@/data/navigation'
+import { mainNavItems } from '@/data/navigation'
 import brandLogo from '@/assets/branding/jivaspaceupdatedlogo.png'
 
-const MobileMenu = ({ isOpen, onClose, onEnquiryOpen }) => {
+const MobileMenu = ({ isOpen, onClose, onEnquiryOpen, propertyCategories = [] }) => {
   const primaryNav = mainNavItems.slice(0, 2)
   const secondaryNav = mainNavItems.slice(2)
   const location = useLocation()

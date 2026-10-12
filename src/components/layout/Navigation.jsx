@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { scrollToElement } from '@/lib/utils'
-import { mainNavItems, propertyCategories } from '@/data/navigation'
+import { mainNavItems } from '@/data/navigation'
 import { siteConfig } from '@/data/siteConfig'
 
-const Navigation = ({ onEnquiryOpen, isLightText = false }) => {
+const Navigation = ({ onEnquiryOpen, isLightText = false, propertyCategories = [] }) => {
   const [activeCategory, setActiveCategory] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [submenuOffset, setSubmenuOffset] = useState(0)
